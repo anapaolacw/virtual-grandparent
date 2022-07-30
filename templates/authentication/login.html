@@ -8,7 +8,7 @@
     <h1 class="text-3xl lg:text-6xl text-white">Login</h1>
 
 </div>
-<form method="post" action="." class="lg:w-1/4 px-4 mx-auto">
+<form method="post" action="{% url 'authentication:login' %}" class="lg:w-1/4 px-4 mx-auto">
     {% csrf_token %}
     <div class="mb-5">
         <label class="text-white">Username</label>
