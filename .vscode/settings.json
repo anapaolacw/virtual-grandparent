@@ -1,5 +1,6 @@
 {
     "python.analysis.extraPaths": [
         "./core"
-    ]
+    ],
+    "python.pythonPath": "/Users/anapaolacw/opt/anaconda3/bin/python"
 }

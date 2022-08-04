@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from core.models import User
 from .models import Chat
 from django.contrib.auth.decorators import login_required
@@ -11,28 +11,25 @@ def chats(request):
 
     for c in user_chats:
         c.receiver_user = get_receiver_user(current_user, c.users.all())
-        print("Receiver user: ")
-        print(c.receiver_user)
 
     return render(request, 'chat/chats.html', {'chats': user_chats})
 
 @login_required
 def chat(request, slug):
-    chat = Chat.objects.get(slug=slug)
-    current_user = get_current_user(request)
-    chat.receiver_user = get_receiver_user(current_user, chat.users.all())
-    print("Receiver user: ", chat.receiver_user)
+    print("current slug is ", slug)
+    try:
+        chat = Chat.objects.get(slug=slug)
+    
+        current_user = get_current_user(request)
+        chat.receiver_user = get_receiver_user(current_user, chat.users.all())
 
-    return render(request, 'chat/chat.html', {'chat': chat})
+        return render(request, 'chat/chat.html', {'chat': chat})
+    except Chat.DoesNotExist:
+        print("Chat no encontrado " +slug)
+        return redirect('chat:chats')
 
 def get_receiver_user(current_user, users):
     for u in users:
-        print("current user ")
-        print(current_user)
-        print("current id is ")
-        print(current_user.id)
-        print("comparing to id")
-        print(u.id)
         if u.id != current_user.id:
             return u
     return "User not available"

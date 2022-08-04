@@ -4,6 +4,8 @@
 
 
 {% block content %}
+<div style="display:none;" id="chat_id">{{ chat.id }}</div>
+<div style="display:none;" id="chat_slug">{{ chat.slug }}</div>
 <div class="p-10 lg:p-12 text-center">
     <h1 class="text-3xl lg:text-6xl text-white">Chat with {{chat.receiver_user.name}}</h1>
 
@@ -35,12 +37,18 @@
         id="chat-message-submit">Submit</button>
     </form>
 </div>
-
+{% endblock %}
 
 {% block scripts %}
-{{chat.slug| json_script:"json-chatname" }}
+{{chat.slug}}
+<!-- |json_script:"chat_slug"|json_script:"chat_id"  -->
 <script>
-    const chatName= JSON.parse(document.getElementById('json-chatname').textContent)
+    console.log("Constantes");
+    console.log(document.getElementById('chat_id').textContent)
+    console.log(document.getElementById('chat_slug').textContent)
+    const chatName= document.getElementById('chat_slug').textContent
+    // const chatSlug= JSON.parse(document.getElementById('chat_slug').textContent)
+    console.log(chatName);
     const chatSocket = new WebSocket(
         'ws://'
         + window.location.host
@@ -56,6 +64,4 @@
         console.log('onclose')
     }
 </script>
-{% endblock %}
-
 {% endblock %}
