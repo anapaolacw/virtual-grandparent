@@ -1,4 +1,5 @@
 {% extends 'core/base.html' %}
+{% load static %}
 
 {% block title %}Chats | {% endblock %}
 
@@ -49,14 +50,22 @@
     const chatName= document.getElementById('chat_slug').textContent
     // const chatSlug= JSON.parse(document.getElementById('chat_slug').textContent)
     console.log(chatName);
+    console.log("Windows location host");
+    console.log(window.location.host);
+
     const chatSocket = new WebSocket(
-        'ws://'
-        + window.location.host
-        + '/ws/'
+        'wss://'
+        +'127.0.0.1:8001'
+        // + window.location.host
+        + '/ws/chat/'
         + chatName
         + '/'
     );
-
+    console.log("Chat scket")
+    console.log(chatSocket)
+    
+    console.log("HOST")
+    console.log(window.location)
     chatSocket.onmessage = function(e){
         console.log('onmessage')
     }
