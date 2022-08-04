@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 
 LOGOUT_REDIRECT_URL = '/'
-LOGIN_REDIRECT_URL = '/chat/chats/'
+LOGIN_REDIRECT_URL = '/chats/'
 LOGIN_URL = '/authentication/login/'
 # Application definition
 
@@ -46,6 +46,12 @@ INSTALLED_APPS = [
     'chat',
     'authentication',
 ]
+
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -76,6 +82,11 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'virtualgrandparent.wsgi.application'
+CHANNEL_LAYERS={
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer'
+    }
+}
 
 
 # Database

@@ -8,13 +8,12 @@
     <h1 class="text-3xl lg:text-6xl text-white">Sign up</h1>
 
 </div>
-<form method="post" action="{%url 'authentication:signup'%}" class="lg:w-1/4 px-4 mx-auto"  enctype="multipart/form-data">
+<form method="post" action="{% url 'authentication:signup'%}" class="lg:w-1/4 px-4 mx-auto"  enctype="multipart/form-data">
     {% csrf_token %}
     {% for field in form %}
     <fieldset class="mb-5">
         <label class="text-white" for="{{ field.name }}">{{ field.label }}</label>
-        <input type="{{field.field.widget.input_type }}" name="{{ field.name }}" class="w-full mt-2 px-4 py-2 rounded-xl">
-        
+        {{field}}
         {% if field.errors %}
             <div class="mt-1 px-4 py-2 rounded-xl bg-red-300 text-white">
                 <p class="error-message">{{ field.errors.0 }}</p>
@@ -25,6 +24,5 @@
     </fieldset>
     {% endfor %}
     <input type="submit" value="Register" class = "px-5 py-3 rounded-xl text-white bg-teal-800 hover:bg-teal-700">
-    <button class="px-5 py-3 rounded-xl text-white bg-teal-800 hover:bg-teal-700">Submit</button>
 </form>
 {% endblock %}
