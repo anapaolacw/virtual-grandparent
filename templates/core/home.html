@@ -1,12 +1,39 @@
 {% extends 'core/base.html' %}
 {% load static %}
 
+{% block static %}
+<link rel="stylesheet" href="{% static 'css/cards.css' %}">
+{% endblock %}
+
 {% block title %}Welcome | {% endblock %}
 
 
 {% block content %}
-<div class="p-10 lg:p-20 text-center">
-    <h1 class="text-3xl lg:text-6xl text-white">Virtual grandparent</h1>
+<div class="container-background">
+    <img src="{% static 'images/background.jpg' %}" class="img-fluid stretch" alt="Two persons">
+
+    <div class="centered">“One person caring about another represents life’s greatest value.” – Jim Rohn</div>
+</div> 
+
+<div class="p-10 lg:p-20 ">
+    <p class="align-text">“One person caring about another represents life’s greatest value.” – Jim Rohn</p>
+</div>
+<div class="cards-container pl-10 pr-10">
+    <div class="col-md-6">
+        How to volunteer?
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit totam facere voluptas, voluptatem illo voluptatum minus doloremque ex. Fuga, vel nemo ea est ex eveniet fugiat molestiae modi quo earum!
+    </div>
+    <div class="col-md-6">
+        How to ask for help?
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores necessitatibus ad excepturi eveniet inventore illum quae officiis asperiores! Possimus soluta omnis aut est neque quos dicta porro enim. Id, impedit.
+    </div>
 
 </div>
+
+<!-- <p>“One person caring about another represents life’s greatest value.” – Jim Rohn</p>
+<p>The simple act of caring is heroic. – Edward Albert</p>
+<div class="p-10 lg:p-20 text-center">
+    <h1 class="text-3xl lg:text-6xl">Virtual grandparent</h1>
+
+</div> -->
 {% endblock %}

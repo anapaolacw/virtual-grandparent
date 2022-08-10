@@ -1,0 +1,20 @@
+.cards-container {
+    column-count: 2;
+}
+  
+  .cards-container div {
+    box-shadow: 0 8px 10px 0 rgba(0,0,0,0.4);
+    transition: 0.3s;
+    width: 40%;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.75);
+    margin: 10px 0;
+  
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+  
+  .cards-container div:first-child {
+      margin: 0;
+  }
