@@ -6,12 +6,18 @@
     --dark-blue: #293241;
     --gray: #333333;
 }
+.title{
+    color: var(--dark-blue);
+    font-size: 2.5rem;
+    margin-bottom: 1rem 0;
+}
 .navbar-background {
     background-color: var(--blue);
 }
 .base-button{
-    background-color: var(--light-blue);
+    background-color: var(--light-blue)  !important;
     color: white;
+    width: 100%
 }
 .large-button{
     text-align: center;

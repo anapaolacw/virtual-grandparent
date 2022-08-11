@@ -1,28 +1,45 @@
 {% extends 'core/base.html' %}
 {% load static %}
 
+{% block static %}
+<link rel="stylesheet" href="{% static 'css/cards.css' %}">
+<link rel="stylesheet" href="{% static 'css/form.css' %}">
+{% endblock %}
+
 {% block title %}Sign up | {% endblock %}
 
 {% block content %}
-<div class="p-10 lg:p-20 text-center">
-    <h1 class="text-3xl lg:text-6xl text-white">Sign up</h1>
+<div class="container-background">
+    <img src="{% static 'images/background.jpg' %}" class="img-fluid stretch" alt="Two persons">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- <div class="centered">“One person caring about another represents life’s greatest value.” – Jim Rohn</div> -->
+</div> 
 
+<div class="card-container p-10">
+    <div class="col-md-6 single-card lg:w-2/3 p-8 mx-auto">
+        <h1 class="title">Sign up</h1>
+        <form method="post" action="{% url 'authentication:signup'%}" class="px-8 mx-auto"  enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+           
+            <fieldset class="mb-5">
+                <div class="custom-wrapper">
+                    {{field}}
+                    <i class="{{ field.field.icon }} input-icon"></i>
+                </div>
+                {% if field.errors %}
+                    <div class="mt-1 px-4 py-2 rounded-xl bg-red-300">
+                        <p class="error-message">{{ field.errors.0 }}</p>
+                    </div>
+                    
+                {% endif %}
+                <span></span>
+            </fieldset>
+            {% endfor %}
+            <input type="submit" value="Register" class = "px-5 py-3 rounded-xl base-button large-button">
+            <br />
+        </form>
+    </div>
 </div>
-<form method="post" action="{% url 'authentication:signup'%}" class="lg:w-1/4 px-4 mx-auto"  enctype="multipart/form-data">
-    {% csrf_token %}
-    {% for field in form %}
-    <fieldset class="mb-5">
-        <label class="text-white" for="{{ field.name }}">{{ field.label }}</label>
-        {{field}}
-        {% if field.errors %}
-            <div class="mt-1 px-4 py-2 rounded-xl bg-red-300 text-white">
-                <p class="error-message">{{ field.errors.0 }}</p>
-            </div>
-            
-        {% endif %}
-        <span></span>
-    </fieldset>
-    {% endfor %}
-    <input type="submit" value="Register" class = "px-5 py-3 rounded-xl text-white bg-teal-800 hover:bg-teal-700">
-</form>
+
 {% endblock %}

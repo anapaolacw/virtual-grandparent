@@ -3,11 +3,11 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.apps import apps as django_apps
 
 class Manager(BaseUserManager):
-    def create_user(self, name, age, phoneNumber, email, password, **kwargs):
+    def create_user(self, name, email, password, phoneNumber, **kwargs):
         if not email:
             raise ValueError('User must have a email address')
         user = self.model(email=self.normalize_email(
-            email), username = email, name = name, age=age, phoneNumber=phoneNumber, **kwargs)
+            email), username = email, name = name, age=25, phoneNumber=phoneNumber, **kwargs)
         if not password:
             raise ValueError('User must have a password field')
         user.save()
@@ -15,9 +15,10 @@ class Manager(BaseUserManager):
 
         return user
 
-    def create_superuser(self, name, age, phoneNumber, email, password, **kwargs):
+    # def create_superuser(self, name, age, phoneNumber, email, password, **kwargs):
+    def create_superuser(self, name, email, password, phoneNumber, **kwargs):
         user = self.create_user(
-            name, age, phoneNumber, email, password)
+            name, phoneNumber, email, password)
         user.is_staff = True
         user.is_superuser = True
         user.save()

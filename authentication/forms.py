@@ -1,13 +1,34 @@
 from django import forms
 from django.core.exceptions import ValidationError
+from psutil import users
 from .models import User
 
 def password_validator(self,value):
     return False if self.password != value else True
 
-class SignupForm(forms.ModelForm):
-    password = forms.CharField(required=True,widget=forms.PasswordInput(), label='Password')
-    confirmPassword = forms.CharField(required=True,widget=forms.PasswordInput(), label='Confirm your password')
+class BootstrapModelForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        icons = getattr(self.Meta, 'icons', dict())
+
+        for field_name, field in self.fields.items():
+            # add form-control class to all fields
+            field.widget.attrs['class'] = 'form-control'
+            # set icon attr on field object
+            if field_name in icons:
+                field.icon = icons[field_name]
+
+class SignupForm(BootstrapModelForm):
+    name= forms.CharField(widget= forms.TextInput
+                           (attrs={'placeholder':'Full name'}))
+    email= forms.CharField(widget= forms.EmailInput
+                           (attrs={'placeholder':'Email'}))
+    phoneNumber= forms.CharField(widget= forms.TextInput
+                           (attrs={'placeholder':'Phone Number (xxx)xxx-xxxx'}))
+    password = forms.CharField(required=True, widget=forms.PasswordInput
+                                            (attrs={'placeholder':'Password'}), label='Password')
+    confirmPassword = forms.CharField(required=True,widget=forms.PasswordInput
+                                            (attrs={'placeholder':'Confirm your Password'}), label='Confirm your password')
 
     def clean_confirmPassword(self):
         if self.cleaned_data['password'] != self.cleaned_data['confirmPassword']:
@@ -15,15 +36,27 @@ class SignupForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('name', 'age', 'phoneNumber', 'email','password')
+        # fields = ('name', 'age', 'phoneNumber', 'email','password')
+        fields = ('name', 'email', 'phoneNumber','password')
         exclude = ['username',]
+        icons ={
+            'name': 'fa fa-user',
+            'password': 'fa fa-lock',
+            'confirmPassword': 'fa fa-lock',
+            'email': 'fa fa-envelope',
+            'phoneNumber': 'fa fa-phone',
+            'age': 'fa fa-calendar'
+        }
     def __init__(self, *args, **kwargs):
         super(SignupForm, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
-            visible.field.widget.attrs['class'] = 'w-full mt-2 px-4 py-2 rounded-xl'
+            visible.field.widget.attrs['class'] = 'w-full mt-2 px-4 py-2 rounded-xl pl-12'
 
-class LoginForm(forms.ModelForm):
-    password = forms.CharField(required=True,widget=forms.PasswordInput(), label='Password2')
+class LoginForm(BootstrapModelForm):
+    email= forms.CharField(widget= forms.EmailInput
+                           (attrs={'placeholder':'Email'}))
+    password = forms.CharField(required=True, widget=forms.PasswordInput
+                                            (attrs={'placeholder':'Password'}), label='Password')
     class Meta:
         model = User
         fields = ('email','password')

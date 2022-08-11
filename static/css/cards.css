@@ -11,6 +11,11 @@
     padding: 2px 16px;
     text-align: center;
 }
+
+.card-container {
+    padding: 2px 16px;
+    text-align: center;
+}
   
 .card {
     box-shadow: 0 8px 10px 0 rgba(0,0,0,0.4);
@@ -22,6 +27,17 @@
     padding: 2rem;
     text-align: left;
     float:right;
+  
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+.single-card {
+    box-shadow: 0 8px 10px 0 rgba(0,0,0,0.4);
+    transition: 0.3s;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.75);
+    text-align: left;
   
     -webkit-column-break-inside: avoid;
     page-break-inside: avoid;
