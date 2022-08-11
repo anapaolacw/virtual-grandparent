@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block static %}
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
 <link rel="stylesheet" href="{% static 'css/cards.css' %}">
 {% endblock %}
 
@@ -12,22 +13,33 @@
 <div class="container-background">
     <img src="{% static 'images/background.jpg' %}" class="img-fluid stretch" alt="Two persons">
 
-    <div class="centered">“One person caring about another represents life’s greatest value.” – Jim Rohn</div>
+    <!-- <div class="centered">“One person caring about another represents life’s greatest value.” – Jim Rohn</div> -->
 </div> 
 
 <div class="p-10 lg:p-20 ">
     <p class="align-text">“One person caring about another represents life’s greatest value.” – Jim Rohn</p>
 </div>
 <div class="cards-container pl-10 pr-10">
-    <div class="col-md-6">
-        How to volunteer?
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit totam facere voluptas, voluptatem illo voluptatum minus doloremque ex. Fuga, vel nemo ea est ex eveniet fugiat molestiae modi quo earum!
-    </div>
-    <div class="col-md-6">
-        How to ask for help?
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores necessitatibus ad excepturi eveniet inventore illum quae officiis asperiores! Possimus soluta omnis aut est neque quos dicta porro enim. Id, impedit.
+    <div class="col-md-6 card">
+        <img src="{% static 'images/icon-help.png' %}" class="card-image" alt="Helper icon">
+
+        <p class="card-title">Join as a volunteer</p>
+        <p>Are you looking to befriend an elder person? Join to the volunteer community to start helping.</p>
+        
+        <br />
+        <a href="{% url 'authentication:signup' %}" class="px-5 py-3 rounded-xl base-button large-button">Sign up</a>
     </div>
 
+    <div class="col-md-6 card card-left">
+        <img src="{% static 'images/icon-old.png' %}" class="card-image" alt="Old person icon">
+
+        <p class="card-title">Ask for help</p>
+        <p>Join as an elder person and share your experience and needs to connect with someone else.</p>
+        <p>You can specify a motive like Phone calls/chatting, Technology help, Social activities and more on.</p>
+        
+        <br />
+        <a href="{% url 'authentication:signup' %}" class="px-5 py-3 rounded-xl base-button large-button">Sign up</a>
+    </div>
 </div>
 
 <!-- <p>“One person caring about another represents life’s greatest value.” – Jim Rohn</p>

@@ -12,10 +12,13 @@
 .base-button{
     background-color: var(--light-blue);
     color: white;
-    
+}
+.large-button{
+    text-align: center;
+    display: block
 }
 .base-button:hover{
-    color: var(--gray);
+    opacity: 0.7;
 }
 .base-background{
     background-color: var(white);
