@@ -54,3 +54,11 @@
 .align-text{
     text-align: center;
 }
+.link-text{
+    color: var(--blue);
+    opacity: 0.8;
+    text-decoration: underline;
+}
+.link-text:hover{
+    opacity: 0.5;
+}

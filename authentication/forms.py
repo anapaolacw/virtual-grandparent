@@ -39,7 +39,7 @@ class SignupForm(BootstrapModelForm):
         # fields = ('name', 'age', 'phoneNumber', 'email','password')
         fields = ('name', 'email', 'phoneNumber','password')
         exclude = ['username',]
-        icons ={
+        icons = {
             'name': 'fa fa-user',
             'password': 'fa fa-lock',
             'confirmPassword': 'fa fa-lock',
@@ -60,7 +60,13 @@ class LoginForm(BootstrapModelForm):
     class Meta:
         model = User
         fields = ('email','password')
+        icons = {
+            'email': 'fa fa-envelope',
+            'password': 'fa fa-lock',
+        }
+
     def __init__(self, *args, **kwargs):
         super(LoginForm, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
-            visible.field.widget.attrs['class'] = 'w-full mt-2 px-4 py-2 rounded-xl'
+            visible.field.widget.attrs['class'] = 'w-full mt-2 px-4 py-2 rounded-xl pl-12'
+
