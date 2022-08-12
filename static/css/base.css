@@ -62,3 +62,28 @@
 .link-text:hover{
     opacity: 0.5;
 }
+.column {
+    float: left;
+    width: 50%;
+}
+.column-title{
+    text-align: center;
+    color: gray;
+    font-size: 1.7rem;
+    padding: .3rem;
+    border-bottom: 5px solid var(--light-blue);
+    margin-bottom: 1rem;
+}
+.column-selected:hover{
+    opacity: 0.5;
+}
+.selected{
+    color: white;
+    background: var(--light-blue);
+}
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
