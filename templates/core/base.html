@@ -21,7 +21,7 @@
             </div>
             <div class="flex items-center space-x-4">
                 {% if request.user.is_authenticated %}
-                    <a href="{% url 'chat:chats' %}" class="text-white hover:text-gray-300">Chats</a>
+                    <a href="{% url 'chat:contacts' %}" class="text-white hover:text-gray-300">Chats</a>
                     <a href="{% url 'authentication:logout' %}" class="px-5 py-3 rounded-xl base-button">Log out</a>
                 {% else %}
                     <a href="{% url 'authentication:login' %}" class="text-white hover:text-gray-300">Login</a>
@@ -29,6 +29,12 @@
                 {% endif %}
             </div>
         </nav>
+
+
+        <div class="container-background">
+            <img src="{% static 'images/background.jpg' %}" class="img-fluid stretch" alt="Two persons">
+            <!-- <div class="centered">“One person caring about another represents life’s greatest value.” – Jim Rohn</div> -->
+        </div> 
 
         {% block content %}
         {% endblock %}

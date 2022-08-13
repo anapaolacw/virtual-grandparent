@@ -1,0 +1,34 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block static %}
+<link rel="stylesheet" href="{% static 'css/cards.css' %}">
+{% endblock %}
+
+{% block title %}Welcome | {% endblock %}
+
+
+{% block content %}
+
+<div class="pl-10 pr-10 grid-container">
+    <div class="card">
+        <img src="{% static 'images/icon-contact.webp' %}" class="card-image" alt="Helper icon">
+
+        <p class="card-title">Your contacts</p>
+        <p>Click here to see your contacts and chats.</p>
+        
+        <br />
+        <a href="{% url 'chat:contacts' %}" class="px-5 py-3 rounded-xl base-button large-button">Contacts</a>
+    </div>
+    <div class="card">
+        <img src="{% static 'images/icon-help.png' %}" class="card-image" alt="Helper icon">
+
+        <p class="card-title">Your help requests</p>
+        <p>Click here to see your help requests.</p>
+        
+        <br />
+        <a href="{% url 'core:helpRequests' %}" class="px-5 py-3 rounded-xl base-button large-button">Help requests</a>
+
+    </div>
+  </div>
+{% endblock %}

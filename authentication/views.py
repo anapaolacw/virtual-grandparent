@@ -1,4 +1,7 @@
 from django.shortcuts import redirect, render
+from sqlalchemy import true
+
+from core.models import Helper, OldPerson
 from .forms import LoginForm, SignupForm
 from django.contrib.auth import authenticate, login as login_session, logout as logout_session
 from django.contrib.auth.decorators import login_required
@@ -18,8 +21,16 @@ def signup(request):
             user.set_password(user.password)
             user.save()
             login(request)
-            return redirect('core:home')
-    return render(request, 'authentication/signup.html', {'form': form})
+            if(form.cleaned_data['isHelper'] == true):
+                Helper.objects.create(user=user)
+                return redirect('core:menuHelper')
+
+            OldPerson.objects.create(user=user)
+            return redirect('core:menu')
+        print(form.errors)
+        error_message = form.errors
+
+    return render(request, 'authentication/signup.html', {'form': form, 'error_message': error_message})
 
 def login(request):
     error_message = None
@@ -33,7 +44,7 @@ def login(request):
         user = authenticate(username=email, email=email, password=password)
         if user and user.is_active:
             login_session(request, user)
-            return redirect('core:home')
+            return redirect('core:menu')
         error_message = django_apps.get_app_config(
             'authentication').INVALID_CREDENTIALS_MESSAGE
     return render(request, 'authentication/login.html', {'form': form, "error_message": error_message})

@@ -1,11 +1,12 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from psutil import users
 from .models import User
+from functools import partial
 
 def password_validator(self,value):
     return False if self.password != value else True
 
+DateInput = partial(forms.DateInput, {'class': 'datepicker'})
 class BootstrapModelForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -17,19 +18,21 @@ class BootstrapModelForm(forms.ModelForm):
             # set icon attr on field object
             if field_name in icons:
                 field.icon = icons[field_name]
-
 class SignupForm(BootstrapModelForm):
     name= forms.CharField(widget= forms.TextInput
                            (attrs={'placeholder':'Full name'}))
     email= forms.CharField(widget= forms.EmailInput
                            (attrs={'placeholder':'Email'}))
     phoneNumber= forms.CharField(widget= forms.TextInput
-                           (attrs={'placeholder':'Phone Number (xxx)xxx-xxxx'}))
+                           (attrs={'placeholder':'Phone Number (xxx)xxx-xxxx'}), max_length=10)
     password = forms.CharField(required=True, widget=forms.PasswordInput
-                                            (attrs={'placeholder':'Password'}), label='Password')
+                                            (attrs={'placeholder':'Password'}))
     confirmPassword = forms.CharField(required=True,widget=forms.PasswordInput
-                                            (attrs={'placeholder':'Confirm your Password'}), label='Confirm your password')
-
+                                            (attrs={'placeholder':'Confirm your Password'}))
+    dateOfBirth = forms.DateField(widget=forms.DateInput(attrs={'placeholder': 'YYYY-MM-DD'}))
+    
+    isHelper = forms.BooleanField(required=False, label='Sign up as a helper')
+   
     def clean_confirmPassword(self):
         if self.cleaned_data['password'] != self.cleaned_data['confirmPassword']:
             raise ValidationError('passwords did not Match.')
@@ -45,12 +48,17 @@ class SignupForm(BootstrapModelForm):
             'confirmPassword': 'fa fa-lock',
             'email': 'fa fa-envelope',
             'phoneNumber': 'fa fa-phone',
-            'age': 'fa fa-calendar'
+            'dateOfBirth': 'fa fa-calendar'
         }
     def __init__(self, *args, **kwargs):
         super(SignupForm, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
-            visible.field.widget.attrs['class'] = 'w-full mt-2 px-4 py-2 rounded-xl pl-12'
+            if visible.field.widget.input_type == 'checkbox':
+                visible.field.widget.attrs['class'] = 'm-2 blue-checkbox'
+            elif visible.field.icon == 'fa fa-calendar':
+                visible.field.widget.attrs['class'] = 'w-full mt-2 px-4 py-2 rounded-xl pl-12 datepicker'
+            else:
+                visible.field.widget.attrs['class'] = 'w-full mt-2 px-4 py-2 rounded-xl pl-12'
 
 class LoginForm(BootstrapModelForm):
     email= forms.CharField(widget= forms.EmailInput
@@ -69,4 +77,3 @@ class LoginForm(BootstrapModelForm):
         super(LoginForm, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'w-full mt-2 px-4 py-2 rounded-xl pl-12'
-

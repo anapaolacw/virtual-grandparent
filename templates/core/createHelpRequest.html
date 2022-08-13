@@ -1,0 +1,39 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block static %}
+<link rel="stylesheet" href="{% static 'css/cards.css' %}">
+{% endblock %}
+
+{% block title %}Welcome | {% endblock %}
+
+
+{% block content %}
+<div class="card-container p-10">
+    <div class="col-md-6 single-card lg:w-2/3 p-8 mx-auto">
+        <div class="row px-8 mx-auto">
+            <div class="column column-title selected">
+                <a href="{% url 'core:createHelpRequest' %}">Create Help Request</a>
+            </div>
+            <div class="column column-title" style="color: transparent"><a>_</a></div>
+        </div> 
+        <form method="post" action="{% url 'core:createHelpRequest' %}" class="px-8 mx-auto"  enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+            <fieldset class="mb-5">
+                <label class="text-gray"  for="{{ field.name }}">{{ field.field.widget.attrs.placeholder }}:</label>
+                {{field}}
+                {% if field.errors %}
+                    <div class="mt-1 px-4 py-2 rounded-xl bg-red-300 text-white">
+                        <p class="error-message">{{ field.errors.0 }}</p>
+                    </div>
+                {% endif %}
+                <span></span>
+            </fieldset>
+            {% endfor %}
+            <input type="submit" value="Create request" class = "px-5 py-3 rounded-xl base-button large-button">
+            <br />
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 
 LOGOUT_REDIRECT_URL = '/'
-LOGIN_REDIRECT_URL = '/chats/'
+LOGIN_REDIRECT_URL = '/contacts/'
 LOGIN_URL = '/authentication/login/'
 # Application definition
 

@@ -1,0 +1,11 @@
+#flexbox_container {
+    display: flex;
+    padding: 10px;
+}
+  
+.flex_item {
+  padding: 10px;
+  flex-grow: 1;
+  max-width: 15rem;
+  margin-right: 30px;
+}

@@ -5,15 +5,16 @@
 <link rel="stylesheet" href="{% static 'css/cards.css' %}">
 <link rel="stylesheet" href="{% static 'css/form.css' %}">
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-{% endblock %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css"> 
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<script type="text/javascript" src="{% static 'js/datepicker.js' %}"></script>
+{% endblock %}
 {% block title %}Sign up | {% endblock %}
 
 {% block content %}
-<div class="container-background">
-    <img src="{% static 'images/background.jpg' %}" class="img-fluid stretch" alt="Two persons">
-</div> 
-
 <div class="card-container p-10">
     <div class="col-md-6 single-card lg:w-2/3 p-8 mx-auto ">
         <div class="row px-8 mx-auto">
@@ -31,7 +32,11 @@
             <fieldset class="mb-5">
                 <div class="custom-wrapper">
                     {{field}}
-                    <i class="{{ field.field.icon }} input-icon"></i>
+                    {% if field.field.widget.input_type == "checkbox" %}
+                        <label style="color:gray" for="{{ field.id }}">{{ field.label }}</label>
+                    {% else %}
+                        <i class="{{ field.field.icon }} input-icon"></i>
+                    {% endif %}
                 </div>
                 {% if field.errors %}
                     <div class="mt-1 px-4 py-2 rounded-xl bg-red-300">
@@ -41,7 +46,7 @@
                 <span></span>
             </fieldset>
             {% endfor %}
-            <input type="submit" value="Register" class = "px-5 py-3 rounded-xl base-button large-button">
+            <input type="submit" value="Sign up" class = "px-5 py-3 rounded-xl base-button large-button">
             <br />
         </form>
         <p>Do you already have an account? 
