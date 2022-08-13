@@ -35,14 +35,12 @@ class Helper(models.Model):
         return self.user.email
 
 class Help(models.Model):
+    id = models.AutoField(primary_key=True)
     status: models.CharField(max_length=1, choices = HELP_STATUS, default='1') #status can be 1: active, 2: rejected, 3: in progress, 4: finished
     description = models.TextField(max_length=1000)
     category = models.CharField(choices=HELP_CATEGORIES, max_length=2, default='OT')
     helper = models.ForeignKey(Helper, on_delete=models.CASCADE, null=True)
     oldPerson = models.ForeignKey(OldPerson, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.user.email
 
 class HelpCandidates(models.Model):
     helper = models.ForeignKey(Helper, on_delete=models.CASCADE, null=True)

@@ -10,4 +10,6 @@ urlpatterns =  [
    path('menu/', views.helperMenu, name='menuHelper'),
    path('helpRequests/', views.helpRequests, name='helpRequests'),
    path('createHelpRequest/', views.createHelpRequest, name='createHelpRequest'),
+   path('editHelpRequest/<int:id>', views.editHelpRequest, name='editHelpRequest'),
+   path('deleteHelpRequest/<int:id>', views.deleteHelpRequest, name='deleteHelpRequest'),
 ]

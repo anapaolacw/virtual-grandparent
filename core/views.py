@@ -1,4 +1,6 @@
+from unicodedata import category
 from django.shortcuts import render, redirect
+from tables import Description
 from core.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -47,6 +49,33 @@ def createHelpRequest(request):
         print(form.errors)
         error_message = form.errors
     return render(request, 'core/createHelpRequest.html', {'form': form, "error_message": error_message})
+
+@login_required
+def editHelpRequest(request, id):
+    error_message = None
+    form = {}
+    help = Help.objects.get(pk = id)
+    if request.method == 'GET':
+        print("getting form")
+        form = HelpRequestForm(instance=help)
+
+    if request.method == 'POST':
+        form = HelpRequestForm(request.POST)
+        if form.is_valid():
+            help.category = form.cleaned_data['category']
+            help.description = form.cleaned_data['description']
+            help.save()
+            messages.info(request, 'Your password has been changed successfully!')
+            return redirect('core:helpRequests')
+        print(form.errors)
+        error_message = form.errors
+    return render(request, 'core/editHelpRequest.html', {'id': help.id,'form': form, "error_message": error_message})
+
+@login_required
+def deleteHelpRequest(request, id):
+    help = Help.objects.get(pk = id)
+    help.delete()
+    return redirect('core:helpRequests')
 
 def get_current_user(request):
     return User.objects.filter(email = request.user)[0]

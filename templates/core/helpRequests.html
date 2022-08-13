@@ -50,24 +50,21 @@
                     <p>{{help.helper}}</p>
                 {% endif %}
             
-            <br />
-            <div class="button-container">
-                <a href="{% url 'chat:contacts' %}" class="px-5 py-3 rounded-xl base-button gray-button button-50 mr-1">
-                    <i class="fa fa-edit fa-space" aria-hidden="true"></i>Edit request
-                </a>
-                {% if help.helper %}
-                <a href="{% url 'chat:contacts' %}" class="px-5 py-3 rounded-xl base-button large-button button-50">
-                    <i class="fa fa-envelope fa-space" aria-hidden="true"></i>Send a message
-                </a>
-                {% elif help.candidates %}
-                <a href="{% url 'chat:contacts' %}" class="px-5 py-3 rounded-xl base-button large-button button-50">
-                    <i class="fa fa-users fa-space" aria-hidden="true"></i>See candidates
-                </a>
-                {% endif %}
-                <a href="{% url 'chat:contacts' %}" class="px-5 py-3 rounded-xl base-button large-button button-50">
-                    <i class="fa fa-users fa-space" aria-hidden="true"></i>See candidates
-                </a>
-            
+                <br />
+                <div class="button-container">
+                    <a href="{% url 'core:editHelpRequest' help.id %}" class="px-5 py-3 rounded-xl base-button gray-button button-50 mr-1">
+                        <i class="fa fa-edit fa-space" aria-hidden="true"></i>Edit request
+                    </a>
+                    {% if help.helper %}
+                    <a href="{% url 'chat:contacts' %}" class="px-5 py-3 rounded-xl base-button large-button button-50">
+                        <i class="fa fa-envelope fa-space" aria-hidden="true"></i>Send a message
+                    </a>
+                    {% elif help.candidates %}
+                    <a href="{% url 'chat:contacts' %}" class="px-5 py-3 rounded-xl base-button large-button button-50">
+                        <i class="fa fa-users fa-space" aria-hidden="true"></i>See candidates
+                    </a>
+                    {% endif %}
+                </div>
             </div>
         </div>
     {% endfor %}

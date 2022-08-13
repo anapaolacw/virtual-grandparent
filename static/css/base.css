@@ -24,6 +24,11 @@
     color: white;
     width: 100%
 }
+.coral-button{
+    background-color: lightcoral  !important;
+    color: white;
+    width: 100%
+}
 .gray-button{
     background-color: lightgray  !important;
     color: white;

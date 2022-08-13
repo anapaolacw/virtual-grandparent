@@ -27,10 +27,8 @@ def signup(request):
 
             OldPerson.objects.create(user=user)
             return redirect('core:menu')
-        print(form.errors)
-        error_message = form.errors
 
-    return render(request, 'authentication/signup.html', {'form': form, 'error_message': error_message})
+    return render(request, 'authentication/signup.html', {'form': form })
 
 def login(request):
     error_message = None
