@@ -15,7 +15,9 @@
             <div class="column column-title selected">
                 <a href="{% url 'core:createHelpRequest' %}">Create Help Request</a>
             </div>
-            <div class="column column-title" style="color: transparent"><a>_</a></div>
+            <div class="column column-title">
+                <a href="{% url 'core:helpRequests' %}">Help Requests</a>
+            </div>
         </div> 
         <form method="post" action="{% url 'core:createHelpRequest' %}" class="px-8 mx-auto"  enctype="multipart/form-data">
             {% csrf_token %}

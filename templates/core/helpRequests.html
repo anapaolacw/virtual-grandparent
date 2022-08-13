@@ -2,36 +2,73 @@
 {% load static %}
 
 {% block static %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="{% static 'css/cards.css' %}">
 <link rel="stylesheet" href="{% static 'css/flexbox.css' %}">
+
 {% endblock %}
 
 {% block title %}Welcome | {% endblock %}
 
 
 {% block content %}
-<div class="pl-10 pr-10 card-container ">
+<div class="p-10 grid-container inline-container">
+    <div class="card flexbox_container single-card help_container px-8">
+        <div class="column column-title selected">
+            <a href="{% url 'core:createHelpRequest' %}">Help Requests</a>
+        </div>
+        <div class="column column-title">
+            <a href="{% url 'core:createHelpRequest' %}">Create Help Request</a>
+        </div>
+    </div>
     {% if not help_requests %}
-        <div class="card mb-10">You don't have any help request yet.</div>
+        <div class="card flexbox_container">
+            <p>You don't have any help request yet. 
+                <a href="{% url 'core:createHelpRequest' %}" class="link-text">Click here to create one</a>
+            </p>
+        </div>
     {% endif %}
-    <br />
-    <a href="{% url 'core:createHelpRequest' %}" class="px-5 py-3 rounded-xl orange-button">Create a Help Request</a>
-</div>
-<div class="pl-10 pr-10 grid-container inline-container">
     
     {% for help in help_requests %}
-        <div class="card" id="flexbox_container">
+        <div class="card flexbox_container">
             {% with 'images/helpCategories/'|add:help.category|add:'.png' as image_static %}
             <img class="flex_item" src="{% static image_static %}" alt="{{help.get_category_display}} icon">
             {% endwith %}
             <div class="flex_item item_selected">
-                <p class="card-title">{{ help.title }}</p>
+                <p class="flex_title">Help category:</p>
                 <p>{{ help.get_category_display }}</p>
+                <p class="flex_title">Description:</p>
                 <p>{{ help.description }}</p>
-                <p>{{help.helper}}</p>
+                <p class="flex_title">Helper:</p>
+                {% if help.helper is None %}
+                    <p>No helper assigned yet
+                    {% if help.candidates %}
+                    , but there are <a class="linl-text" href="{% url 'core:createHelpRequest' %}">{{help.candidates.count}} candidates (clic here to see candidates)</a> 
+                    {% endif %}
+                    </p>
+                {% else %}
+                    <p>{{help.helper}}</p>
+                {% endif %}
             
             <br />
-            <a href="{% url 'chat:contacts' %}" class="px-5 py-3 rounded-xl base-button large-button">Send a message to {{help.helper.name}}</a>
+            <div class="button-container">
+                <a href="{% url 'chat:contacts' %}" class="px-5 py-3 rounded-xl base-button gray-button button-50 mr-1">
+                    <i class="fa fa-edit fa-space" aria-hidden="true"></i>Edit request
+                </a>
+                {% if help.helper %}
+                <a href="{% url 'chat:contacts' %}" class="px-5 py-3 rounded-xl base-button large-button button-50">
+                    <i class="fa fa-envelope fa-space" aria-hidden="true"></i>Send a message
+                </a>
+                {% elif help.candidates %}
+                <a href="{% url 'chat:contacts' %}" class="px-5 py-3 rounded-xl base-button large-button button-50">
+                    <i class="fa fa-users fa-space" aria-hidden="true"></i>See candidates
+                </a>
+                {% endif %}
+                <a href="{% url 'chat:contacts' %}" class="px-5 py-3 rounded-xl base-button large-button button-50">
+                    <i class="fa fa-users fa-space" aria-hidden="true"></i>See candidates
+                </a>
+            
+            </div>
         </div>
     {% endfor %}
 </div>

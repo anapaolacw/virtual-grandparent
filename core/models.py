@@ -44,3 +44,7 @@ class Help(models.Model):
     def __str__(self):
         return self.user.email
 
+class HelpCandidates(models.Model):
+    helper = models.ForeignKey(Helper, on_delete=models.CASCADE, null=True)
+    help = models.ForeignKey(Help, on_delete=models.CASCADE, null=True)
+    

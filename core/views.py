@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from core.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Help, OldPerson
+from .models import Help, HelpCandidates, OldPerson
 from .forms import HelpRequestForm
 
 
@@ -24,6 +24,8 @@ def helpRequests(request):
     current_user = get_current_user(request)
     old_person = get_old_person_by_id(current_user.id)
     help_requests = Help.objects.filter(oldPerson = old_person)
+    for h in help_requests:
+        h.candidates = HelpCandidates.objects.filter(help = h)
 
     return render(request, 'core/helpRequests.html', {'help_requests': help_requests})
 

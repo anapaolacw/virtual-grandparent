@@ -19,8 +19,13 @@
     color: white;
     width: 100%
 }
-.orange-button{
-    background-color: var(--orange)  !important;
+.crimson-button{
+    background-color: crimson  !important;
+    color: white;
+    width: 100%
+}
+.gray-button{
+    background-color: lightgray  !important;
     color: white;
     width: 100%
 }
@@ -28,7 +33,7 @@
     text-align: center;
     display: block
 }
-.base-button:hover, .orange-button:hover{
+.base-button:hover, .crimson-button:hover, .gray-button:hover{
     opacity: 0.7;
 }
 .base-background{
@@ -101,4 +106,7 @@
 }
 .background-white{
     background: white;
+}
+.fa-space{
+    margin-right: 5px;
 }
