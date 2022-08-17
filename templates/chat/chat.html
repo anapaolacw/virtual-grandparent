@@ -19,32 +19,49 @@
 
 
 {% block content %}
+<div class="p-10 pt-4 pb-0 grid-container inline-container">
 
-<div class="lg:w-2/4 mx-4 lg:mx-auto p-4 bg-white rounded-xl">
-    <div class="chat-messages space-y-3" id="chat-messages">
+    <div class="card single-card help_container px-8 mb-0" style="width:100%">
+        <div class="flexbox_container">
+            <div class="column column-title selected">
+                <a href="{% url 'chat:chat' contact_id %}">Chat</a>
+            </div>
+            <div class="column column-title">
+                <a href="{% url 'chat:contacts' %}">Contacts</a>
+            </div>
+        </div> 
+        <!-- Chat -->
+        <div class="bg-white rounded-xl">
 
-        {% for m in messages %}
-        <div class='chat-container darker p-4'> 
-            <p class='font-semibold'>{{m.senderName}}</p>
-            <p>{{m.content}}</p>
-            <span class='time-left'>{{m.time}}</span>
+            <div class="chat-messages space-y-3 fixed-height-container" >
+                <div class="scroll-content" id="chat-messages">
+                    {% for m in messages %}
+                    <div class="message-container {% if m.isOwnerMessage %}own-message{% endif %}"> 
+                        <p class='font-semibold'>{{m.senderName}}</p>
+                        <p>{{m.content}}</p>
+                        <span class='time-left'>{{m.time}}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+
+            </div>
+            
         </div>
-        {% endfor %}
 
+        <div class="rounded-xl mt-4">
+            <form id="chatForm" action="{% url 'chat:send' %}">
+                {% csrf_token %}
+                <div class="message-input">
+                    <textarea class="message-textarea px-4 py-2 rounded-xl background-white" style="width:80%" placeholder="Your message..." id="message" name="message"></textarea>
+                    <button class="message-button px-5 py-3 rounded-xl base-button" style="width:19%" id="btnSendMessage">Send</button>
+                </div>
+            </form>
+        </div>
     </div>
-    
 </div>
 
-<div class="lg:w-2/4 my-6 mx-4 lg:mx-auto p-4 bg-white rounded-xl">
-    <form id="chatForm" action="{% url 'chat:send' %}">
-        {% csrf_token %}
-        <!-- <input type="text" name="message" class="flex-1 mr-3" placeholder="Your message..." 
-        id="message"> -->
-        <textarea class="w-full mt-2 px-4 py-2 rounded-xl background-white" placeholder="Your message..." id="message" name="message"></textarea>
 
-        <button class="px-5 py-3 rounded-xl base-button" id="btnSendMessage">Submit</button>
-    </form>
-</div>
-
+<p name="contact_id" id="contact_id" >{{ contact_id }}</p>
 <p name="chat_id" id="chat_id" >{{ chat.id }}</p>
 {% endblock %}

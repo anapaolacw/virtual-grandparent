@@ -83,7 +83,6 @@ $(document).ready(function() {
         })
     },
     error: function (jqXhr, textStatus, errorMessage) {
-      console.log("NAY")
       console.log('Error' + errorMessage);
     }
    })

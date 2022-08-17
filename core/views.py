@@ -123,6 +123,10 @@ def myOffers(request):
         candidate = HelpCandidates.objects.filter(helper = helper, help = h).first()
         h.offerDescription = candidate.description
         h.status = candidate.get_status_display
+        accepted = next(
+            (item for item in HELP_STATUS if item[1] == 'Accepted'),
+            {}
+        )
     return render(request, 'core/myOffers.html', {'help_requests': help_requests})
 
 @login_required

@@ -1,16 +1,21 @@
 $(document).ready(function() {
+    // Clicking enter on message input
+    $('#message').keypress(function (e) {
+        if (e.which == 13) {
+          $('#chatForm').submit();
+          return false;    //<---- Add this line
+        }
+      });
+      
     $(document).on('submit', '#chatForm', function(e){
         e.preventDefault();
         var form = $('#chatForm');
         var actionUrl = form.attr('action');
-        alert(actionUrl)
-        console.log("Action url ")
-        console.log(actionUrl)
         $.ajax({
             type:'POST',
             url: actionUrl,
             data: {
-                chat_id: $('#chat_id').text(),
+                contact_id: $('#contact_id').text(),
                 message: $('#message').val(),
                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
             },
@@ -21,25 +26,27 @@ $(document).ready(function() {
         document.getElementById('message').value='';
     })
     setInterval(function(){
-        
         var getMessagesUrl = "/chats/getMessages/" +$('#chat_id').text()
-        console.log(getMessagesUrl)
         $.ajax({
             type: 'GET',
             url: getMessagesUrl,
             success: function(response){
-                console.log(response);
                 $("#chat-messages").empty();
                 for(var key in response.messages){
-                    console.log("key")
-                    console.log(key)
-                    var temp=" <div class='chat-container darker'> <p class='font-semibold'>"+response.messages[key].senderName+"</p><p>"+response.messages[key].content+"</p><span class='time-left'>"+response.messages[key].time+"</span></div>";                    
+                    var extraClass="";
+                    if(response.messages[key].isOwnerMessage){
+                        extraClass="own-message";
+                    }
+                    var temp="<div class='message-container "+extraClass+"'>"+
+                                "<p class='font-semibold'>"+response.messages[key].senderName+"</p>"+
+                                "<p>"+response.messages[key].content+"</p>"+
+                                "<span class='time-left'>"+response.messages[key].time+"</span>"+
+                            "</div>";   
                     $("#chat-messages").append(temp);
                 }
-                console.log("updated")
             },
             error: function(response){
-                alert("An error ocurred")
+                console.log("An error ocurred")
             }
         });
     }, 1000);

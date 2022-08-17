@@ -28,11 +28,11 @@ def contacts(request):
     return render(request, 'chat/contacts.html', {'contacts': contacts})
 
 @login_required
-def chat(request, id):
-    print("current id is ", id)
+def chat(request, contact_id):
+    print("current id is ", contact_id)
     try:
         current_user = get_current_user(request)
-        contact = User.objects.get(id=id)
+        contact = User.objects.get(id=contact_id)
         chat = Chat.objects.filter(users__in=[current_user, contact]).first()
 
         if not chat:
@@ -40,35 +40,41 @@ def chat(request, id):
         
         chat.receiver = contact
         chat.sender = current_user
-        messages_format = get_messages_format(chat)
-        return render(request, 'chat/chat.html', {'chat': chat, 'messages': messages_format})
+        messages_format = get_messages_format(chat, current_user.name)
+        return render(request, 'chat/chat.html', {'chat': chat, 'contact_id':contact_id, 'messages': messages_format})
     except Chat.DoesNotExist:
         print("Chat no encontrado ")
         return redirect('chat:contacts')
 
 @login_required
 def getMessages(request, id):
+    current_user = get_current_user(request)
     chat = Chat.objects.get(id=id)
-    messages_format = get_messages_format(chat)
+    messages_format = get_messages_format(chat, current_user.name)
     return JsonResponse({"messages": messages_format})
 
 @login_required
 def send(request):
     message = request.POST['message']
-    chat_id = request.POST['chat_id']
-    now = datetime.datetime.now()
+    contact_id = request.POST['contact_id']
     current_user = get_current_user(request)
-    chat = Chat.objects.get(id=chat_id)
+    contact = User.objects.get(id=contact_id)
+    chat = Chat.objects.filter(users__in=[current_user, contact]).first()
+    now = datetime.datetime.now()
     new_message = Message.objects.create(type="txt", content=message, time=now, sender= current_user, chat = chat)
     new_message.save()
     return HttpResponse("Message sent successfully")
 
-def get_messages_format(chat):
-    messages = Message.objects.filter(chat=chat)
+def get_messages_format(chat, user_name):
+    messages = Message.objects.filter(chat=chat).order_by('-time')
     messages_format = []
     for m in messages:
         m.senderName = m.sender.name
-        messages_format.append({'content': m.content, 'time': m.time, 'senderName': m.sender.name})
+        m.isOwnerMessage = False
+        if m.senderName == user_name:
+            m.isOwnerMessage = True
+        m.time = m.time.strftime("%b %d, %H:%M")
+        messages_format.append({'content': m.content, 'time': m.time, 'senderName': m.sender.name, 'isOwnerMessage': m.isOwnerMessage})
     return messages_format
 
 def create_chat(current_user, contact):
