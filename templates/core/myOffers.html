@@ -57,21 +57,25 @@
                         <p>{{ help.get_category_display }}</p>
                     </td>
                     <td class="vertically-centered">
-                        <p class="blue_title">{{ help.oldPersonName }}</p>
+                        <p class="blue_title" style="text-align: center;">{{ help.oldPersonName }}</p>
                         <p class="flex_title">Description:</p>
                         <p>{{ help.description }}</p>
                         <p class="flex_title">My offer:</p>
                         <p>{{ help.offerDescription }}</p>
+                        <p class="flex_title">Status:</p>
+                        <p>{{ help.status }}</p>
                         <br />
                     </td>
                     <td class="vertically-centered">
+                        {% if help.status == "Accepted" %}
                         <a href="{% url 'chat:contacts' %}" class="px-5 py-3 rounded-xl base-button large-button">
                             <i class="fa fa-envelope fa-space" aria-hidden="true"></i>Send a message
                         </a>
-                        <br>
+                        {% else %}
                         <a href="{% url 'core:editHelpOffer' help.id %}" class="px-5 py-3 rounded-xl base-button gray-button large-button">
                             <i class="fa fa-edit fa-space" aria-hidden="true"></i>Edit offer
                         </a>
+                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}

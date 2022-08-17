@@ -1,22 +1,88 @@
 {% extends 'core/base.html' %}
 {% load static %}
 
+
+{% block static %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{% static 'css/cards.css' %}">
+<link rel="stylesheet" href="{% static 'css/flexbox.css' %}">
+<link rel="stylesheet" href="{% static 'css/table.css' %}">
+{% endblock %}
+
+
+{% block scripts %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+{% endblock %}
+
+
 {% block title %}Chats | {% endblock %}
 
 {% block content %}
-<div class="p-10 lg:p-12 text-center">
-    <h1 class="text-3xl lg:text-6xl text-white">Chats</h1>
+<div class="p-10 grid-container inline-container">
 
-</div>
-
-<div class="w-full flex flex-wrap items-center">
-    {% for chat in chats %}
-        <div class="w-full lg:w-1/4 px-3 py-3">
-            <div class="p-4 bg-white shadow rounded-xl text-center">
-                {{ chat.receiver_user.name }}
-                <a href="{% url 'chat:chat' chat.slug %}"  class="px-5 py-3 block rounded-xl base-button">Message</a>
+    <div class="card single-card help_container px-8" style="width:100%">
+        <div class="flexbox_container">
+            <div class="column column-title selected">
+                <a href="{% url 'chat:contacts' %}">Contacts</a>
             </div>
-        </div>
-    {% endfor %}
+            <div class="column column-title">
+                {% if request.user.isHelper %}
+                <a href="{% url 'core:allHelpRequests' %}">Help requests</a>
+                {% else %}
+                <a href="{% url 'core:helpRequests' %}">Help Requests</a>
+                {% endif %}
+            </div>
+        </div> 
+        {% if not contacts %}
+            <p class="mb-8">You don't have any contact yet. 
+                {% if request.user.isHelper %}
+                <a href="{% url 'core:allHelpRequests' %}" class="link-text">Click here to see all help requests</a>
+                {% else %}
+                <a href="{% url 'core:helpRequests' %}" class="link-text">Click here to see your help requests</a>
+                {% endif %}
+            </p>
+        {% else %}
+        
+        <table class="table table-striped" style="width:100%">
+            <thead>
+            <tr>
+                <th scope="col" width="20%">Contact name</th>
+                <th scope="col" width="20%">Email</th>
+                <th scope="col" width="40%">Help Description</th>
+                <th scope="col" width="20%"></th>
+            </tr>
+            </thead>
+            <tbody id="requestTable">
+                {% for c in contacts %}
+                <tr>
+                    <td>
+                        <p>{{ c.name }}</p>
+                    </td>
+                    <td>
+                        <p>{{ c.email }}</p>
+                    </td>
+                    <td>
+                        {% for h in c.helps %}
+                        <p>{{ h.description }}</p>
+                        {% if c.helps.count > 1 %}
+                            <hr/>
+                        {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <a href="{% url 'chat:chat' c.id %}" class="px-5 py-3 rounded-xl base-button large-button ">
+                            <i class="fa fa-envelope fa-space" aria-hidden="true"></i>Send a message
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    </div>
 </div>
+
 {% endblock %}

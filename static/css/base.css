@@ -135,3 +135,11 @@
     color:var(--blue);
     font-weight: 600;
 }
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 4px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}

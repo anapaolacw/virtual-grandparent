@@ -120,8 +120,9 @@ def myOffers(request):
     for h in help_requests:
         user = User.objects.get(email = h.oldPerson.user.email)
         h.oldPersonName = user.name
-        h.offerDescription = HelpCandidates.objects.filter(helper = helper, help = h).first().description
-
+        candidate = HelpCandidates.objects.filter(helper = helper, help = h).first()
+        h.offerDescription = candidate.description
+        h.status = candidate.get_status_display
     return render(request, 'core/myOffers.html', {'help_requests': help_requests})
 
 @login_required
@@ -171,6 +172,7 @@ def createHelpOffer(request, id):
         if form.is_valid():
             current_user = get_current_user(request)
             helper = get_helper_by_id(current_user.id)
+            HelpCandidates.objects.filter(helper = helper, help = help_request).delete()
             helpCandidate = form.save(commit=False)
             helpCandidate.helper = helper
             helpCandidate.help = help_request

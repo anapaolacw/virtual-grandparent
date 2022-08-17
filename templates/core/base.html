@@ -20,7 +20,7 @@
             <div class="flex items-center space-x-4">
                 {% if request.user.is_authenticated %}
                     {% if request.user.isHelper %}
-                    <a href="{% url 'core:allHelpRequests' %}" class="px-5 py-3 transparent-button" style="width:">Help requests</a>
+                    <a href="{% url 'core:allHelpRequests' %}" class="px-5 py-3 transparent-button">Help requests</a>
                     <a href="{% url 'core:myOffers' %}" class="px-5 py-3 transparent-button">My offers</a>
                     {% else %}
                     <a href="{% url 'chat:contacts' %}" class="px-5 py-3 transparent-button">Contacts</a>
