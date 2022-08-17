@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model as user_model
-from sqlalchemy import true
+import datetime
+
 User = user_model()
 
 HELP_CATEGORIES = [
@@ -24,15 +25,9 @@ class OldPerson(models.Model):
     needsHelp: models.BooleanField(default=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.user.email
-
 class Helper(models.Model):
-    isAproved: models.BooleanField(default=True)
+    isVerified = models.BooleanField(default=False)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.user.email
 
 class Help(models.Model):
     id = models.AutoField(primary_key=True)
@@ -41,8 +36,11 @@ class Help(models.Model):
     category = models.CharField(choices=HELP_CATEGORIES, max_length=2, default='OT')
     helper = models.ForeignKey(Helper, on_delete=models.CASCADE, null=True)
     oldPerson = models.ForeignKey(OldPerson, on_delete=models.CASCADE)
+    date = models.DateField(default=datetime.date.today, blank=True)
 
 class HelpCandidates(models.Model):
     helper = models.ForeignKey(Helper, on_delete=models.CASCADE, null=True)
     help = models.ForeignKey(Help, on_delete=models.CASCADE, null=True)
+    description = models.TextField(max_length=1000)
+
     

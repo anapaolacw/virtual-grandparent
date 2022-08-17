@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render
+from django.urls import reverse
 from sqlalchemy import true
 
 from core.models import Helper, OldPerson
@@ -8,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.apps import apps as django_apps
 
 from django.contrib.auth import get_user_model
+from django.http import HttpResponse
 User = get_user_model()
 # Create your views here.
 def signup(request):
@@ -19,14 +21,17 @@ def signup(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.set_password(user.password)
+            isHelper = form.cleaned_data['isHelper']
+            user.isHelper = isHelper
             user.save()
-            login(request)
-            if(form.cleaned_data['isHelper'] == true):
+            if(isHelper):
                 Helper.objects.create(user=user)
-                return redirect('core:menuHelper')
+                login(request)
+                return HttpResponse(reverse('core:helperMenu'))
 
             OldPerson.objects.create(user=user)
-            return redirect('core:menu')
+            login(request)
+            return HttpResponse(reverse('core:menu'))
 
     return render(request, 'authentication/signup.html', {'form': form })
 
@@ -42,7 +47,9 @@ def login(request):
         user = authenticate(username=email, email=email, password=password)
         if user and user.is_active:
             login_session(request, user)
-            return redirect('core:menu')
+            if(is_old_person(user.id)):
+                return redirect('core:menu')
+            return redirect('core:helperMenu')
         error_message = django_apps.get_app_config(
             'authentication').INVALID_CREDENTIALS_MESSAGE
     return render(request, 'authentication/login.html', {'form': form, "error_message": error_message})
@@ -51,3 +58,6 @@ def login(request):
 def logout(request):
     logout_session(request)
     return redirect('core:home')
+
+def is_old_person(id):
+    return OldPerson.objects.filter(user_id = id).count() > 0

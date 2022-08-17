@@ -1,0 +1,83 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block static %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{% static 'css/cards.css' %}">
+<link rel="stylesheet" href="{% static 'css/flexbox.css' %}">
+<link rel="stylesheet" href="{% static 'css/table.css' %}">
+{% endblock %}
+
+{% block scripts %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<script type="text/javascript" src="{% static 'js/buttonsHandler.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/buttonNotification.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/tableHandler.js' %}"></script>
+{% endblock %}
+
+{% block title %}Welcome | {% endblock %}
+
+
+{% block content %}
+<div class="py-10 grid-container inline-container">
+    <div class="card single-card help_container px-8" style="width:100%">
+        <div class="flexbox_container">
+            <div class="column column-title selected">
+                <a href="{% url 'core:allHelpRequests' %}">Help Request list</a>
+            </div>
+            <div class="column column-title">
+                <a href="{% url 'core:myOffers' %}">My Help Offers</a>
+            </div>
+
+        </div>
+        {% if not help_requests %}
+            <p class="mb-8">There are no help request available at the moment. 
+                <a href="{% url 'core:myOffers' %}" class="link-text">Click here to see your help offers</a>
+            </p>
+        {% else %}
+            <p>Type something in the input field to search the table for any column:</p>  
+            <input class="w-full mt-2 px-4 py-2 rounded-xl background-whiten pl-12" id="searchInput" type="text" placeholder="Search..">
+            <span class="fa fa-search input-span"></span>
+            <br>
+            <br>
+
+            <table class="table table-striped" style="width:100%">
+                <thead>
+                <tr>
+                    <th scope="col" width="15%">Category</th>
+                    <th scope="col" width="15%">User</th>
+                    <th scope="col" width="30%">Description</th>
+                    <th scope="col" width="10%">Date</th>
+                    <th scope="col" width="30%">Actions</th>
+                </tr>
+                </thead>
+                <tbody id="requestTable">
+                    {% for help in help_requests %}
+                    <tr>
+                        <td class="vertically-centered"style="text-align: center;">
+                            <p>{{ help.get_category_display }}</p>
+                            {% with 'images/helpCategories/'|add:help.category|add:'.png' as image_static %}
+                                <img class="table_icon" src="{% static image_static %}" style="max-width:4rem"alt="{{help.get_category_display}} icon">
+                            {% endwith %}
+                        </td>
+                        <td class="flex_title vertically-centered">{{help.oldPersonName}}</td>
+                        <td class="vertically-centered">{{help.description}}</td>
+                        <td class="vertically-centered">{{help.date}}</td>
+                        <td class="vertically-centered">
+                            <a id="btnOfferHelp" href="{% url 'core:createHelpOffer' help.id %}"  class="px-5 py-3 block rounded-xl base-button">
+                                <i class="fa fa-plus fa-space" aria-hidden="true"></i>
+                                Offer help
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+</div>
+<p id="isVerified" style="display:none">{{isVerified}}</p>
+{% endblock %}

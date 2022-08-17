@@ -10,8 +10,6 @@
         <link rel="stylesheet" href="{% static 'css/base.css' %}">
         {% block static %}
         {% endblock %}
-
-        <script src="https://cdn.tailwindcss.com"></script>
     </head>
 
     <body class="base-background">
@@ -33,12 +31,12 @@
 
         <div class="container-background">
             <img src="{% static 'images/background.jpg' %}" class="img-fluid stretch" alt="Two persons">
-            <!-- <div class="centered">“One person caring about another represents life’s greatest value.” – Jim Rohn</div> -->
         </div> 
 
         {% block content %}
         {% endblock %}
 
+        <script src="https://cdn.tailwindcss.com"></script>
         {% block scripts %}
         {% endblock %}
     </body>

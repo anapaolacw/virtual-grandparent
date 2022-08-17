@@ -17,28 +17,23 @@
 .base-button{
     background-color: var(--light-blue)  !important;
     color: white;
-    width: 100%
-}
-.crimson-button{
-    background-color: crimson  !important;
-    color: white;
-    width: 100%
+    width: 100%;
+    text-align: center;
 }
 .coral-button{
     background-color: lightcoral  !important;
-    color: white;
-    width: 100%
 }
 .gray-button{
     background-color: lightgray  !important;
-    color: white;
-    width: 100%
+}
+.green-button{
+    background-color: lightseagreen  !important;
 }
 .large-button{
     text-align: center;
     display: block
 }
-.base-button:hover, .crimson-button:hover, .gray-button:hover{
+.base-button:hover{
     opacity: 0.7;
 }
 .base-background{
@@ -114,4 +109,24 @@
 }
 .fa-space{
     margin-right: 5px;
+}
+.input-span{
+    float: left;
+    margin-top: -28px;
+    position: relative;
+    z-index: 1;
+    color: gray;
+    left: 1rem;
+    color: var(--blue);
+}
+.white-text{
+    color: white;
+}
+.disabled{
+    color: gray;
+    accent-color: transparent;
+}
+.blue_title{
+    color:var(--blue);
+    font-weight: bold;
 }

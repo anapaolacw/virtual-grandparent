@@ -5,13 +5,19 @@
 <link rel="stylesheet" href="{% static 'css/cards.css' %}">
 <link rel="stylesheet" href="{% static 'css/form.css' %}">
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css"> 
+{% endblock %}
+
+{% block scripts %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 <script type="text/javascript" src="{% static 'js/datepicker.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/buttonsHandler.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/buttonNotification.js' %}"></script>
 {% endblock %}
+
 {% block title %}Sign up | {% endblock %}
 
 {% block content %}
@@ -25,10 +31,9 @@
                 <a href="{% url 'authentication:login' %}">Login</a>
             </div>
         </div> 
-        <form method="post" action="{% url 'authentication:signup'%}" class="px-8 mx-auto"  enctype="multipart/form-data">
+        <form method="post" id="signupForm" action="{% url 'authentication:signup'%}" class="px-8 mx-auto"  enctype="multipart/form-data">
             {% csrf_token %}
             {% for field in form %}
-           
             <fieldset class="mb-5">
                 <div class="custom-wrapper">
                     {{field}}
