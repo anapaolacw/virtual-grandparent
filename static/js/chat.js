@@ -26,7 +26,7 @@ $(document).ready(function() {
         document.getElementById('message').value='';
     })
     setInterval(function(){
-        var getMessagesUrl = "/chats/getMessages/" +$('#chat_id').text()
+        var getMessagesUrl = "/chats/messages/" +$('#chat_id').text()
         $.ajax({
             type: 'GET',
             url: getMessagesUrl,
