@@ -1,76 +1,50 @@
 {% extends 'core/base.html' %}
 {% load static %}
 
+{% block static %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{% static 'css/cards.css' %}">
+<link rel="stylesheet" href="{% static 'css/chat.css' %}">
+{% endblock %}
+
+{% block scripts %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<script type="text/javascript" src="{% static 'js/chat.js' %}"></script>
+{% endblock %}
+
 {% block title %}Chats | {% endblock %}
 
 
 {% block content %}
-<div style="display:none;" id="chat_id">{{ chat.id }}</div>
-<div style="display:none;" id="chat_slug">{{ chat.slug }}</div>
-<div class="p-10 lg:p-12 text-center">
-    <h1 class="text-3xl lg:text-6xl text-white">Chat with {{chat.receiver_user.name}}</h1>
-
-</div>
 
 <div class="lg:w-2/4 mx-4 lg:mx-auto p-4 bg-white rounded-xl">
     <div class="chat-messages space-y-3" id="chat-messages">
-        <div class="p-4 bg-gray-200 rounded-xl">
-            <p class="font-semibold">Username</p>
-            <p>The message Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque debitis sunt hic voluptates ab eveniet perspiciatis quo assumenda fugit reiciendis, aperiam alias sit rem nesciunt repudiandae quos nihil nostrum. Voluptatibus.</p>
+
+        {% for m in messages %}
+        <div class='chat-container darker p-4'> 
+            <p class='font-semibold'>{{m.senderName}}</p>
+            <p>{{m.content}}</p>
+            <span class='time-left'>{{m.time}}</span>
         </div>
-        <div class="p-4 bg-gray-200 rounded-xl">
-            <p class="font-semibold">Username</p>
-            <p>The message Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque debitis sunt hic voluptates ab eveniet perspiciatis quo assumenda fugit reiciendis, aperiam alias sit rem nesciunt repudiandae quos nihil nostrum. Voluptatibus.</p>
-        </div>
-        <div class="p-4 bg-gray-200 rounded-xl">
-            <p class="font-semibold">Username</p>
-            <p>The message Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque debitis sunt hic voluptates ab eveniet perspiciatis quo assumenda fugit reiciendis, aperiam alias sit rem nesciunt repudiandae quos nihil nostrum. Voluptatibus.</p>
-        </div>
+        {% endfor %}
+
     </div>
     
 </div>
 
 <div class="lg:w-2/4 my-6 mx-4 lg:mx-auto p-4 bg-white rounded-xl">
-    <form method="post" action="." class="flex">
-        <input type="text" name="content" class="flex-1 mr-3" placeholder="Your message..." 
-        id="chat-message-input">
-        <button class="px-5 py-3 rounded-xl base-button" 
-        id="chat-message-submit">Submit</button>
+    <form id="chatForm" action="{% url 'chat:send' %}">
+        {% csrf_token %}
+        <!-- <input type="text" name="message" class="flex-1 mr-3" placeholder="Your message..." 
+        id="message"> -->
+        <textarea class="w-full mt-2 px-4 py-2 rounded-xl background-white" placeholder="Your message..." id="message" name="message"></textarea>
+
+        <button class="px-5 py-3 rounded-xl base-button" id="btnSendMessage">Submit</button>
     </form>
 </div>
-{% endblock %}
 
-{% block scripts %}
-{{chat.slug}}
-<!-- |json_script:"chat_slug"|json_script:"chat_id"  -->
-<script>
-    console.log("Constantes");
-    console.log(document.getElementById('chat_id').textContent)
-    console.log(document.getElementById('chat_slug').textContent)
-    const chatName= document.getElementById('chat_slug').textContent
-    // const chatSlug= JSON.parse(document.getElementById('chat_slug').textContent)
-    console.log(chatName);
-    console.log("Windows location host");
-    console.log(window.location.host);
-
-    const chatSocket = new WebSocket(
-        'wss://'
-        +'127.0.0.1:8001'
-        // + window.location.host
-        + '/ws/chat/'
-        + chatName
-        + '/'
-    );
-    console.log("Chat scket")
-    console.log(chatSocket)
-    
-    console.log("HOST")
-    console.log(window.location)
-    chatSocket.onmessage = function(e){
-        console.log('onmessage')
-    }
-    chatSocket.onclose = function(e){
-        console.log('onclose')
-    }
-</script>
+<p name="chat_id" id="chat_id" >{{ chat.id }}</p>
 {% endblock %}

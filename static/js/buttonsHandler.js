@@ -9,7 +9,7 @@ $(document).ready(function() {
   //Edit help request form
   $('#editForm').on('submit',function(e){
     e.preventDefault();
-    var form = $('#editForma');
+    var form = $('#editForm');
     var actionUrl = form.attr('action');
     $.ajax({
       type: "POST",

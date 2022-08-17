@@ -13,14 +13,14 @@ class Chat(models.Model):
 
 class Message(models.Model):
     type = models.CharField(max_length=10) #1: text, 2: image
-    content = models.CharField(max_length=255, null=True)
+    content = models.TextField(max_length=1000, null=False)
     image = models.ImageField(upload_to='images', null=True, blank=True)
     time = models.DateTimeField(default=now, blank=True)
     sender = models.ForeignKey(User, on_delete=models.CASCADE)
-    chat_id = models.ForeignKey(Chat, on_delete=models.CASCADE)
+    chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
 
 class Call(models.Model):
     type = models.CharField(max_length=10) #1: call, 2: videocall
     time = models.DateTimeField(default=now, blank=True)
     sender = models.ForeignKey(User, on_delete=models.CASCADE)
-    chat_id = models.ForeignKey(Chat, on_delete=models.CASCADE)
+    chat = models.ForeignKey(Chat, on_delete=models.CASCADE)

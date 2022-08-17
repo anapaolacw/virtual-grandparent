@@ -1,7 +1,9 @@
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from core.models import HelpCandidates, User, HELP_STATUS, Helper, OldPerson, Help
-from .models import Chat
+from .models import Chat, Message
 from django.contrib.auth.decorators import login_required
+import datetime
 
 # Create your views here
 @login_required
@@ -29,15 +31,55 @@ def contacts(request):
 def chat(request, id):
     print("current id is ", id)
     try:
-        chat = Chat.objects.get(id=id)
-    
         current_user = get_current_user(request)
-        chat.receiver_user = get_receiver_user(current_user, chat.users.all())
+        contact = User.objects.get(id=id)
+        chat = Chat.objects.filter(users__in=[current_user, contact]).first()
 
-        return render(request, 'chat/chat.html', {'chat': chat})
+        if not chat:
+            chat = create_chat(current_user, contact)
+        
+        chat.receiver = contact
+        chat.sender = current_user
+        messages_format = get_messages_format(chat)
+        return render(request, 'chat/chat.html', {'chat': chat, 'messages': messages_format})
     except Chat.DoesNotExist:
-        print("Chat no encontrado " +id)
+        print("Chat no encontrado ")
         return redirect('chat:contacts')
+
+@login_required
+def getMessages(request, id):
+    chat = Chat.objects.get(id=id)
+    messages_format = get_messages_format(chat)
+    return JsonResponse({"messages": messages_format})
+
+@login_required
+def send(request):
+    message = request.POST['message']
+    chat_id = request.POST['chat_id']
+    now = datetime.datetime.now()
+    current_user = get_current_user(request)
+    chat = Chat.objects.get(id=chat_id)
+    new_message = Message.objects.create(type="txt", content=message, time=now, sender= current_user, chat = chat)
+    new_message.save()
+    return HttpResponse("Message sent successfully")
+
+def get_messages_format(chat):
+    messages = Message.objects.filter(chat=chat)
+    messages_format = []
+    for m in messages:
+        m.senderName = m.sender.name
+        messages_format.append({'content': m.content, 'time': m.time, 'senderName': m.sender.name})
+    return messages_format
+
+def create_chat(current_user, contact):
+    slug = current_user.name.split('@')[0] + contact.name.split('@')[0]
+    chat = Chat()
+    chat.slug = slug
+    print("slug " +slug)
+    chat.save()
+    chat.users.set([current_user, contact])
+    chat.save()
+    return chat
 
 def get_receiver_user(current_user, users):
     for u in users:
