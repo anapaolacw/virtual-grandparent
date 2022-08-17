@@ -27,6 +27,9 @@ table {
   vertical-align: top;
   border-top: 1px solid #ddd;
 }
+.table > thead > tr > th {
+  font-weight: 500;
+}
 th {
     text-align: left;
 }

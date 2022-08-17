@@ -20,6 +20,11 @@
     width: 100%;
     text-align: center;
 }
+.transparent-button{
+    color: white;
+    width: 100%;
+    text-align: center;
+}
 .coral-button{
     background-color: lightcoral  !important;
 }
@@ -33,7 +38,7 @@
     text-align: center;
     display: block
 }
-.base-button:hover{
+.base-button:hover, .transparent-button:hover{
     opacity: 0.7;
 }
 .base-background{
@@ -128,5 +133,5 @@
 }
 .blue_title{
     color:var(--blue);
-    font-weight: bold;
+    font-weight: 600;
 }

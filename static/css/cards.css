@@ -73,3 +73,19 @@
     margin-right: auto;
     width: 8rem;
 }
+.wrapper{
+    width: 700px;
+    margin: 0 auto;
+}
+   
+.col1{
+    width: 30%;
+    float: left;
+    text-align: right;
+    padding-right: 1rem;
+}
+
+.col2{
+    width: 70;
+    float: left;
+}

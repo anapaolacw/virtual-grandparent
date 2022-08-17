@@ -45,11 +45,11 @@
                 {% if help.helper is None %}
                     <p>No helper assigned yet
                     {% if help.candidates %}
-                    , but there are <a class="linl-text" href="{% url 'core:createHelpRequest' %}">{{help.candidates.count}} candidates (clic here to see candidates)</a> 
+                    , but there are <a class="link-text" href="{% url 'core:getCandidates' help.id %}">{{help.candidates.count}} candidates (click here to see candidates)</a> 
                     {% endif %}
                     </p>
                 {% else %}
-                    <p>{{help.helper}}</p>
+                    <p>{{help.helper.user.name}}</p>
                 {% endif %}
             
                 <br />
@@ -62,7 +62,7 @@
                         <i class="fa fa-envelope fa-space" aria-hidden="true"></i>Send a message
                     </a>
                     {% elif help.candidates %}
-                    <a href="{% url 'chat:contacts' %}" class="px-5 py-3 rounded-xl base-button large-button button-50">
+                    <a href="{% url 'core:getCandidates' help.id  %}" class="px-5 py-3 rounded-xl base-button large-button button-50">
                         <i class="fa fa-users fa-space" aria-hidden="true"></i>See candidates
                     </a>
                     {% endif %}

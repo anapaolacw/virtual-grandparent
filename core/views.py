@@ -5,7 +5,7 @@ from tables import Description
 from core.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Help, HelpCandidates, OldPerson, Helper
+from .models import Help, HelpCandidates, OldPerson, Helper, HELP_STATUS
 from .forms import HelpRequestForm, HelpCandidateForm
 from django.db.models import Q
 from django.urls import reverse
@@ -81,6 +81,19 @@ def deleteHelpRequest(request, id):
     return redirect('core:helpRequests')
 
 @login_required
+def getCandidates(request, id):
+    help = Help.objects.get(id = id)
+    candidates = HelpCandidates.objects.filter(help = help)
+    for c in candidates:
+        print("Name:")
+        c.helperName = c.helper.user.name
+        print(c.helperName)
+        print("Status")
+        print(c.status)
+    return render(request, 'core/candidates.html', {'candidates': candidates, 'help': help})
+
+
+@login_required
 def allHelpRequests(request):
     current_user = get_current_user(request)
     helper = get_helper_by_id(current_user.id)
@@ -111,6 +124,7 @@ def myOffers(request):
 
     return render(request, 'core/myOffers.html', {'help_requests': help_requests})
 
+@login_required
 def deleteHelpOffer(request, id):
     current_user = get_current_user(request)
     helper = get_helper_by_id(current_user.id)
@@ -118,6 +132,31 @@ def deleteHelpOffer(request, id):
     helpCandidate = HelpCandidates.objects.filter(helper = helper, help = help)
     helpCandidate.delete()
     return redirect('core:myOffers')
+
+@login_required
+def rejectHelpOffer(request, id):
+    helpCandidate = HelpCandidates.objects.get(id = id)
+    inProgress = next(
+        (item for item in HELP_STATUS if item[1] == 'Rejected'),
+        {}
+    )
+    helpCandidate.status = inProgress[0]
+    helpCandidate.save()
+    return redirect('core:getCandidates', id=helpCandidate.help.id)
+
+@login_required
+def acceptHelpOffer(request, id):
+    helpCandidate = HelpCandidates.objects.get(id = id)
+    accepted = next(
+        (item for item in HELP_STATUS if item[1] == 'Accepted'),
+        {}
+    )
+    helpCandidate.status = accepted[0]
+    helpCandidate.save()
+    help = Help.objects.get(id = helpCandidate.help.id)
+    help.helper = helpCandidate.helper
+    help.save()
+    return redirect('core:helpRequests')
 
 @login_required
 def createHelpOffer(request, id):

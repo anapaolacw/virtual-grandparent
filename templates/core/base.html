@@ -19,7 +19,13 @@
             </div>
             <div class="flex items-center space-x-4">
                 {% if request.user.is_authenticated %}
-                    <a href="{% url 'chat:contacts' %}" class="text-white hover:text-gray-300">Chats</a>
+                    {% if request.user.isHelper %}
+                    <a href="{% url 'core:allHelpRequests' %}" class="px-5 py-3 transparent-button" style="width:">Help requests</a>
+                    <a href="{% url 'core:myOffers' %}" class="px-5 py-3 transparent-button">My offers</a>
+                    {% else %}
+                    <a href="{% url 'chat:contacts' %}" class="px-5 py-3 transparent-button">Contacts</a>
+                    <a href="{% url 'core:helpRequests' %}" class="px-5 py-3 transparent-button ">My requests</a>
+                    {% endif %}
                     <a href="{% url 'authentication:logout' %}" class="px-5 py-3 rounded-xl base-button">Log out</a>
                 {% else %}
                     <a href="{% url 'authentication:login' %}" class="text-white hover:text-gray-300">Login</a>

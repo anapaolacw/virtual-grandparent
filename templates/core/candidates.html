@@ -1,0 +1,98 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block static %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{% static 'css/cards.css' %}">
+<link rel="stylesheet" href="{% static 'css/flexbox.css' %}">
+<link rel="stylesheet" href="{% static 'css/table.css' %}">
+{% endblock %}
+
+
+{% block scripts %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<script type="text/javascript" src="{% static 'js/buttonsHandler.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/buttonNotification.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/tableHandler.js' %}"></script>
+{% endblock %}
+
+{% block title %}Welcome | {% endblock %}
+
+
+{% block content %}
+<div class="p-10 grid-container inline-container">
+
+    <div class="card single-card help_container px-8" style="width:100%">
+        <div class="flexbox_container">
+            <div class="column column-title selected">
+                <a href="{% url 'core:getCandidates' help.id %}">See candidates</a>
+            </div>
+            <div class="column column-title">
+                <a href="{% url 'core:helpRequests' %}">Help Requests</a>
+            </div>
+        </div> 
+        {% if not candidates %}
+            <p class="mb-8">You don't have any candidate yet. 
+                <a href="{% url 'core:helpRequests' %}" class="link-text">Click here to see your help requests</a>
+            </p>
+        {% else %}
+<!-- 
+        {% if help %}
+        <div class="row">
+            <div class="wrapper">
+                <div class="col1">
+                    {% with 'images/helpCategories/'|add:help.category|add:'.png' as image_static %}
+                        <img class="table_icon" src="{% static image_static %}" alt="{{help.get_category_display}} icon" style="margin-right: 0;">
+                    {% endwith %}
+                </div>
+                <div class="col2">
+                    <p class="flex_title">Category</p>
+                    <p>{{ help.get_category_display }}</p>
+                    <p class="flex_title">Description:</p>
+                    <p>{{ help.description }}</p>
+                </div>
+            </div>
+        </div>
+        {% endif %} -->
+
+        <table class="table table-striped" style="width:100%">
+            <thead>
+            <tr>
+                <th scope="col" width="15%">Name</th>
+                <th scope="col" width="40%">Description</th>
+                <th scope="col" width="15%">Current Status</th>
+                <th scope="col" width="30%">Buttons</th>
+            </tr>
+            </thead>
+            <tbody id="requestTable">
+                {% for c in candidates %}
+                <tr>
+                    <td>
+                        <p>{{ c.helperName }}</p>
+                    </td>
+                    <td>
+                        <p>{{ c.description }}</p>
+                    </td>
+                    <td>
+                        <p>{{ c.get_status_display }}</p>
+                    </td>
+                    <td>
+                        <a href="{% url 'core:rejectHelpOffer' c.id %}" id="btnDelete" class="px-5 py-3 rounded-xl base-button gray-button large-button">
+                            <i class="fa fa-trash fa-space" aria-hidden="true"></i>Reject offer
+                        </a>
+                        <br>
+                        <a href="{% url 'core:acceptHelpOffer' c.id %}" class="px-5 py-3 rounded-xl base-button large-button">
+                            <i class="fa fa-edit fa-space" aria-hidden="true"></i>Accept offer
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    </div>
+</div>
+{% endblock %}

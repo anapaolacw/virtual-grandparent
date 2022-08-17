@@ -16,7 +16,7 @@ HELP_CATEGORIES = [
 ]
 
 HELP_STATUS = [
-    ('1', 'Active'),
+    ('1', 'Accepted'),
     ('2', 'Rejected'),
     ('3', 'In process'),
     ('4', 'Finished')
@@ -31,7 +31,6 @@ class Helper(models.Model):
 
 class Help(models.Model):
     id = models.AutoField(primary_key=True)
-    status: models.CharField(max_length=1, choices = HELP_STATUS, default='1') #status can be 1: active, 2: rejected, 3: in progress, 4: finished
     description = models.TextField(max_length=1000)
     category = models.CharField(choices=HELP_CATEGORIES, max_length=2, default='OT')
     helper = models.ForeignKey(Helper, on_delete=models.CASCADE, null=True)
@@ -42,5 +41,7 @@ class HelpCandidates(models.Model):
     helper = models.ForeignKey(Helper, on_delete=models.CASCADE, null=True)
     help = models.ForeignKey(Help, on_delete=models.CASCADE, null=True)
     description = models.TextField(max_length=1000)
+    status= models.CharField(max_length=1, choices = HELP_STATUS, default='3') #status can be 1: active, 2: rejected, 3: in progress, 4: finished
+
 
     
