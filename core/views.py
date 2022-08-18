@@ -2,6 +2,7 @@ from unicodedata import category
 from django.shortcuts import render, redirect
 from sqlalchemy import false, null, true
 from tables import Description
+from analytics.models import Transaction
 from core.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -48,6 +49,7 @@ def createHelpRequest(request):
             help = form.save(commit=False)
             help.oldPerson = get_old_person_by_id(get_current_user(request).id)
             help.save()
+            createTransasction(help.oldPerson.user.email, "", "Help request", "Created", "User "+str(help.oldPerson.user.name)+" created a help request with id " +str(help.id)+" with the following description: "+help.description)
             return redirect('core:helpRequests')
         print(form.errors)
         error_message = form.errors
@@ -68,6 +70,7 @@ def editHelpRequest(request, id):
             help.category = form.cleaned_data['category']
             help.description = form.cleaned_data['description']
             help.save()
+            createTransasction(help.oldPerson.user.email, "", "Help request", "Modified",  "User "+help.oldPerson.user.name+" modified a help request with id "+str(help.id)+" with the following description: "+help.description)
             return redirect("core:helpRequests")
         print("ERRORS")
         print(form.errors)
@@ -78,6 +81,8 @@ def editHelpRequest(request, id):
 def deleteHelpRequest(request, id):
     help = Help.objects.get(pk = id)
     help.delete()
+    createTransasction(help.oldPerson.user.email, "", "Help request", "Deleted",  "User "+help.oldPerson.user.name+" deleted a help request with id "+str(help.id)+" with the following description: "+help.description)
+
     return redirect('core:helpRequests')
 
 @login_required
@@ -135,18 +140,27 @@ def deleteHelpOffer(request, id):
     helper = get_helper_by_id(current_user.id)
     help = Help.objects.get(id = id)
     helpCandidate = HelpCandidates.objects.filter(helper = helper, help = help)
+    helpId = helpCandidate.first().id
+    helpDescription = helpCandidate.first().description
     helpCandidate.delete()
+    print("First candidae")
+    print(helpId)
+    createTransasction(helper.user.email, help.oldPerson.user.email, "Help offer", "Deleted",  "User "+helper.user.name+" deleted a help offer with id "+str(helpId)+" with the following description: "+helpDescription)
+
     return redirect('core:myOffers')
 
 @login_required
 def rejectHelpOffer(request, id):
     helpCandidate = HelpCandidates.objects.get(id = id)
+    help = Help.objects.get(id = helpCandidate.help.id)
     inProgress = next(
         (item for item in HELP_STATUS if item[1] == 'Rejected'),
         {}
     )
     helpCandidate.status = inProgress[0]
     helpCandidate.save()
+    createTransasction(help.oldPerson.user.email, helpCandidate.user.email, "Help offer", "Rejected",  "User "+help.oldPerson.user.email+" rejected a help offer with id "+str(helpCandidate.id)+" offered by: "+helpCandidate.user.email)
+
     return redirect('core:getCandidates', id=helpCandidate.help.id)
 
 @login_required
@@ -161,6 +175,8 @@ def acceptHelpOffer(request, id):
     help = Help.objects.get(id = helpCandidate.help.id)
     help.helper = helpCandidate.helper
     help.save()
+    createTransasction(help.oldPerson.user.email, helpCandidate.user.email, "Help offer", "Accepted",  "User "+help.oldPerson.user.email+" accepted a help offer with id "+str(helpCandidate.id)+" offered by: "+helpCandidate.user.email)
+
     return redirect('core:helpRequests')
 
 @login_required
@@ -181,6 +197,7 @@ def createHelpOffer(request, id):
             helpCandidate.helper = helper
             helpCandidate.help = help_request
             helpCandidate.save()
+            createTransasction(helper.user.email, help_request.oldPerson.user.email, "Help offer", "Created",  "User "+helper.user.name+" created a help offer with id "+str(helpCandidate.id)+" with the following description: "+helpCandidate.description)
             return redirect('core:myOffers')
         print(form.errors)
         error_message = form.errors
@@ -206,12 +223,16 @@ def editHelpOffer(request, id):
             print("New description: ")
             print(helpCandidate.description)
             helpCandidate.save()
+            createTransasction(helper.user.email, help.oldPerson.user.email, "Help offer", "Modified",  "User "+helper.user.name+" modified a help offer with id "+str(helpCandidate.id)+" with the following description: "+helpCandidate.description)
             return redirect("core:myOffers")
         print("ERRORS")
         print(form.errors)
         error_message = form.errors
     return render(request, 'core/editHelpOffer.html', {'id': id,'form': form, "error_message": error_message, 'help_request': help})
 
+def createTransasction(emailUser1, emailUser2, model, action, details):
+    print("Creating transaction...")
+    return Transaction.objects.create(emailUser1=emailUser1, emailUser2=emailUser2, model=model, action=action, details=details)
 
 def get_current_user(request):
     return User.objects.filter(email = request.user)[0]

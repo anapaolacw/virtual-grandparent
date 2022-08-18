@@ -10,6 +10,7 @@ const notification=(titleText, text, type, confirmButtonText)=>{
 const confirmNotification=(text, confirmButtonText, confirmColor, redirectUrl)=>{
     Swal.fire({
         text:text,
+        type: "warning",
         showCancelButton: true,
         confirmButtonText: confirmButtonText,
         confirmButtonColor: confirmColor,

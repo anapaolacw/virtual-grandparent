@@ -26,6 +26,7 @@ urlpatterns = [
     path('', include('core.urls')),
     path('admin/', admin.site.urls),
     path('chats/', include('chat.urls'), name="chats"),
+    path('analytics/', include('analytics.urls'), name="analytics"),
     path('authentication/', include('authentication.urls'), name="authentication"),
     path(
         "favicon.ico",
