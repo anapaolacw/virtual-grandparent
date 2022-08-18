@@ -1,33 +1,47 @@
 import datetime
-from django.test import TestCase
-from django.urls import reverse
-from django.test import Client
+from django.test import Client, TestCase
+from sqlalchemy import null
+from chat.models import Chat, Message, Call
 from authentication.models import User
 from core.models import Help, Helper, OldPerson
 from chat.models import Chat
 
-# Create your tests here.
-class URLTests(TestCase):
-    # Tests all urls
+class ChatModelsTest(TestCase):
     def setUp(self):
         populate_users()
         login(self)
         populate_old_persons()
         populate_helpers()
         populate_help()
-        populate_chat()
 
-    def test_contacts_page(self):
-        url = reverse('chat:contacts')
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
+    def test_create_chat(self):
+        help = Help.objects.first()
+        chats_counter = Chat.objects.all().count()
+        Chat.objects.create(isActive = True)
+        chats_counter_after_add = Chat.objects.all().count()
+        self.assertGreater(chats_counter_after_add, chats_counter)
 
-    def test_chat_page(self):
-        chat = Chat.objects.first()
-        url = reverse('chat:chat', args=(chat.id,))
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
+    def test_create_chat_with_users(self):
+        help = Help.objects.first()
+        chat = Chat.objects.create(isActive = True)
+        chat.users.set([help.oldPerson.user, help.helper.user])
+        self.assertEqual(chat.users.count(), 2)
 
+    def test_create_message(self):
+        help = Help.objects.first()
+        chat = Chat.objects.create(isActive = True)
+        chat.users.set([help.oldPerson.user, help.helper.user])
+        messages_counter = Message.objects.all().count()
+        Message.objects.create(
+            type= "txt",
+            content= "Hello, nice to meet you!",
+            sender= chat.users.filter(isHelper = True)[0],
+            chat= chat,
+        )
+        messages_counter_after_add = Message.objects.all().count()
+        self.assertGreater(messages_counter_after_add, messages_counter)
+    
+    
 def populate_users():
     dateOfBirth = datetime.datetime(1996, 1, 27)
     users = [
@@ -74,11 +88,6 @@ def populate_help():
         oldPerson = old_person,
         helper = helper
     )
-
-def populate_chat():
-    help = Help.objects.first()
-    chat = Chat.objects.create(isActive = True)
-    chat.users.set([help.oldPerson.user, help.helper.user])
 
 def login(self):
     self.client = Client()

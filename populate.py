@@ -127,6 +127,7 @@ def populate_users():
         user = User.objects.get_or_create(name=u['name'], email = u['email'], phoneNumber = u['phoneNumber'], dateOfBirth=u['dateOfBirth'], isHelper=u['isHelper'])[0]
         user.set_password(u['password'])
         user.save()
+
 def populate_old_persons():
     old_users = User.objects.filter(isHelper = False)
 

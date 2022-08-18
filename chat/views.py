@@ -29,7 +29,6 @@ def contacts(request):
 
 @login_required
 def chat(request, contact_id):
-    print("current id is ", contact_id)
     try:
         current_user = get_current_user(request)
         contact = User.objects.get(id=contact_id)

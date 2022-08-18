@@ -31,9 +31,6 @@ def helpRequests(request):
     current_user = get_current_user(request)
     old_person = get_old_person_by_id(current_user.id)
     help_requests = Help.objects.filter(oldPerson = old_person)
-    print("Obteniendo help requests de")
-    print(old_person.user.name)
-    print(help_requests.count())
     for h in help_requests:
         h.candidates = HelpCandidates.objects.filter(help = h)
 
@@ -90,11 +87,7 @@ def getCandidates(request, id):
     help = Help.objects.get(id = id)
     candidates = HelpCandidates.objects.filter(help = help)
     for c in candidates:
-        print("Name:")
         c.helperName = c.helper.user.name
-        print(c.helperName)
-        print("Status")
-        print(c.status)
     return render(request, 'core/candidates.html', {'candidates': candidates, 'help': help})
 
 
@@ -143,8 +136,6 @@ def deleteHelpOffer(request, id):
     helpId = helpCandidate.first().id
     helpDescription = helpCandidate.first().description
     helpCandidate.delete()
-    print("First candidae")
-    print(helpId)
     createTransasction(helper.user.email, help.oldPerson.user.email, "Help offer", "Deleted",  "User "+helper.user.name+" deleted a help offer with id "+str(helpId)+" with the following description: "+helpDescription)
 
     return redirect('core:myOffers')
@@ -159,7 +150,7 @@ def rejectHelpOffer(request, id):
     )
     helpCandidate.status = inProgress[0]
     helpCandidate.save()
-    createTransasction(help.oldPerson.user.email, helpCandidate.user.email, "Help offer", "Rejected",  "User "+help.oldPerson.user.email+" rejected a help offer with id "+str(helpCandidate.id)+" offered by: "+helpCandidate.user.email)
+    createTransasction(help.oldPerson.user.email, helpCandidate.helper.user.email, "Help offer", "Rejected",  "User "+help.oldPerson.user.email+" rejected a help offer with id "+str(helpCandidate.id)+" offered by: "+helpCandidate.helper.user.email)
 
     return redirect('core:getCandidates', id=helpCandidate.help.id)
 
@@ -175,8 +166,7 @@ def acceptHelpOffer(request, id):
     help = Help.objects.get(id = helpCandidate.help.id)
     help.helper = helpCandidate.helper
     help.save()
-    createTransasction(help.oldPerson.user.email, helpCandidate.user.email, "Help offer", "Accepted",  "User "+help.oldPerson.user.email+" accepted a help offer with id "+str(helpCandidate.id)+" offered by: "+helpCandidate.user.email)
-
+    createTransasction(help.oldPerson.user.email, helpCandidate.helper.user.email, "Help offer", "Accepted",  "User "+help.oldPerson.user.email+" accepted a help offer with id "+str(helpCandidate.id)+" offered by: "+helpCandidate.helper.user.email)
     return redirect('core:helpRequests')
 
 @login_required
@@ -209,8 +199,6 @@ def editHelpOffer(request, id):
     form = {}
     help = Help.objects.get(id = id)
     helpCandidate = HelpCandidates.objects.filter(helper = helper, help = help).first()
-    print("Help candidate")
-    print(helpCandidate)
 
     if request.method == 'GET':
         form = HelpCandidateForm(instance=helpCandidate)
@@ -219,8 +207,6 @@ def editHelpOffer(request, id):
         form = HelpCandidateForm(request.POST)
         if form.is_valid():
             helpCandidate.description = form.cleaned_data['description']
-            print("New description: ")
-            print(helpCandidate.description)
             helpCandidate.save()
             createTransasction(helper.user.email, help.oldPerson.user.email, "Help offer", "Modified",  "User "+helper.user.name+" modified a help offer with id "+str(helpCandidate.id)+" with the following description: "+helpCandidate.description)
             return redirect("core:myOffers")
@@ -230,7 +216,6 @@ def editHelpOffer(request, id):
     return render(request, 'core/editHelpOffer.html', {'id': id,'form': form, "error_message": error_message, 'help_request': help})
 
 def createTransasction(emailUser1, emailUser2, model, action, details):
-    print("Creating transaction...")
     return Transaction.objects.create(emailUser1=emailUser1, emailUser2=emailUser2, model=model, action=action, details=details)
 
 def get_current_user(request):
@@ -241,3 +226,5 @@ def get_old_person_by_id(id):
 
 def get_helper_by_id(id):
     return Helper.objects.get(user_id = id)
+
+    

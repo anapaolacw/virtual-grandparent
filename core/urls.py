@@ -17,9 +17,9 @@ urlpatterns =  [
    path('help-request/candidates/<int:id>', views.getCandidates, name='getCandidates'),
    path('help-request/candidate/reject/<int:id>', views.rejectHelpOffer, name='rejectHelpOffer'),
    path('help-request/candidate/acept/<int:id>', views.acceptHelpOffer, name='acceptHelpOffer'),
-   path('my-offer-help/<int:id>', views.seeOffer, name='seeOffer'),
-   path('my-offers', views.myOffers, name='myOffers'),
    path('my-offer/delete/<int:id>', views.deleteHelpOffer, name='deleteHelpOffer'),
    path('my-offer/edit/<int:id>', views.editHelpOffer, name='editHelpOffer'),
+   path('my-offer-help/<int:id>', views.seeOffer, name='seeOffer'),
+   path('my-offers', views.myOffers, name='myOffers'),
 
 ]
