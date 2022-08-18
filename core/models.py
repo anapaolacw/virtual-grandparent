@@ -22,10 +22,12 @@ HELP_STATUS = [
     ('4', 'Finished')
 ]
 class OldPerson(models.Model):
-    needsHelp: models.BooleanField(default=True)
+    id = models.AutoField(primary_key=True)
+    needsHelp = models.BooleanField(default=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 class Helper(models.Model):
+    id = models.AutoField(primary_key=True)
     isVerified = models.BooleanField(default=False)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
@@ -38,6 +40,7 @@ class Help(models.Model):
     date = models.DateField(default=datetime.date.today, blank=True)
 
 class HelpCandidates(models.Model):
+    id = models.AutoField(primary_key=True)
     helper = models.ForeignKey(Helper, on_delete=models.CASCADE, null=True)
     help = models.ForeignKey(Help, on_delete=models.CASCADE, null=True)
     description = models.TextField(max_length=1000)

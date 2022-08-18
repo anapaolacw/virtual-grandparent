@@ -31,6 +31,9 @@ def helpRequests(request):
     current_user = get_current_user(request)
     old_person = get_old_person_by_id(current_user.id)
     help_requests = Help.objects.filter(oldPerson = old_person)
+    print("Obteniendo help requests de")
+    print(old_person.user.name)
+    print(help_requests.count())
     for h in help_requests:
         h.candidates = HelpCandidates.objects.filter(help = h)
 
@@ -39,10 +42,6 @@ def helpRequests(request):
 @login_required
 def createHelpRequest(request):
     error_message = None
-    form = {}
-    if request.method == 'GET':
-        form = HelpRequestForm()
-        
     if request.method == 'POST':
         form = HelpRequestForm(request.POST)
         if form.is_valid():
@@ -53,6 +52,7 @@ def createHelpRequest(request):
             return redirect('core:helpRequests')
         print(form.errors)
         error_message = form.errors
+    form = HelpRequestForm()
     return render(request, 'core/createHelpRequest.html', {'form': form, "error_message": error_message})
 
 @login_required
@@ -184,9 +184,6 @@ def createHelpOffer(request, id):
     error_message = None
     form = {}
     help_request = Help.objects.get(id= id)
-    if request.method == 'GET':
-        form = HelpCandidateForm()
-        
     if request.method == 'POST':
         form = HelpCandidateForm(request.POST)
         if form.is_valid():
@@ -201,6 +198,8 @@ def createHelpOffer(request, id):
             return redirect('core:myOffers')
         print(form.errors)
         error_message = form.errors
+    
+    form = HelpCandidateForm()
     return render(request, 'core/createHelpOffer.html', {'form': form, "error_message": error_message,'help_request': help_request, 'id': id})
 
 def editHelpOffer(request, id):

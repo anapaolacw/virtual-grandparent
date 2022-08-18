@@ -69,7 +69,13 @@
                 </div>
                 <br />
             </form>
-
+            {% if error_message %}
+                <div class="mt-1 px-4 py-2 rounded-xl bg-red-300 text-white">
+                    <span class='error-message'>
+                        {{error_message}}
+                    </span>
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>

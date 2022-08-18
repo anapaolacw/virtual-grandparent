@@ -15,7 +15,15 @@
     <body class="base-background">
         <nav class="flex items-center justify-between px-4 py-6 navbar-background">
             <div>
-                <a href="/" class="text-xl text-white">Virtual grandparent</a>
+                {% if request.user.is_authenticated %}
+                    {% if request.user.isHelper %}
+                        <a href="{% url 'core:helperMenu' %}" class="text-xl text-white">Virtual grandparent</a>
+                    {% else %}
+                        <a href="{% url 'core:menu' %}" class="text-xl text-white">Virtual grandparent</a>
+                    {% endif %}
+                {% else %}
+                    <a href="/" class="text-xl text-white">Virtual grandparent</a>
+                {% endif %}
             </div>
             <div class="flex items-center space-x-4">
                 {% if request.user.is_authenticated %}

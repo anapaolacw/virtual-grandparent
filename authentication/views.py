@@ -13,9 +13,6 @@ from django.http import HttpResponse
 User = get_user_model()
 # Create your views here.
 def signup(request):
-    form = {}
-    if(request.method == 'GET'):
-        form = SignupForm()
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
@@ -33,14 +30,11 @@ def signup(request):
             login(request)
             return HttpResponse(reverse('core:menu'))
 
+    form = SignupForm()
     return render(request, 'authentication/signup.html', {'form': form })
 
 def login(request):
     error_message = None
-    form = {}
-    if request.method == 'GET':
-        form = LoginForm()
-        
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
@@ -50,8 +44,10 @@ def login(request):
             if(is_old_person(user.id)):
                 return redirect('core:menu')
             return redirect('core:helperMenu')
+        print("Error")
         error_message = django_apps.get_app_config(
             'authentication').INVALID_CREDENTIALS_MESSAGE
+    form = LoginForm()
     return render(request, 'authentication/login.html', {'form': form, "error_message": error_message})
 
 @login_required()

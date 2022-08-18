@@ -3,6 +3,7 @@ from django.utils.timezone import now
 
 # Create your models here.
 class Transaction(models.Model):
+    id = models.AutoField(primary_key=True)
     emailUser1 = models.EmailField(max_length=200)
     emailUser2 = models.EmailField(max_length=200, blank=True)
     dateTime = models.DateTimeField(default=now)

@@ -12,6 +12,7 @@ class Chat(models.Model):
     users = models.ManyToManyField(User)
 
 class Message(models.Model):
+    id = models.AutoField(primary_key=True)
     type = models.CharField(max_length=10) #1: text, 2: image
     content = models.TextField(max_length=1000, null=False)
     image = models.ImageField(upload_to='images', null=True, blank=True)
@@ -20,6 +21,7 @@ class Message(models.Model):
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
 
 class Call(models.Model):
+    id = models.AutoField(primary_key=True)
     type = models.CharField(max_length=10) #1: call, 2: videocall
     time = models.DateTimeField(default=now, blank=True)
     sender = models.ForeignKey(User, on_delete=models.CASCADE)

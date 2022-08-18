@@ -40,6 +40,13 @@
             <input type="submit" value="Login" class = "px-5 py-3 rounded-xl base-button large-button">
             <br />
         </form>
+        {% if error_message %}
+            <div class="mt-1 px-4 py-2 rounded-xl bg-red-300 text-white">
+                <span class='error-message'>
+                    {{error_message}}
+                </span>
+            </div>
+        {% endif %}
         <p>Do you not have an account? 
             <a href="{% url 'authentication:signup' %}" class="link-text">Click here to register</a>
         </p>
