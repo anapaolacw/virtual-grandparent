@@ -5,7 +5,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{% block title %}{% endblock %}Virtual grandparent</title>
+        <title>{% block title %}{% endblock %}Virtual Grandparent</title>
         <link rel="icon"href="{% static 'favicon.ico' %}">
         <link rel="stylesheet" href="{% static 'css/base.css' %}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -15,16 +15,16 @@
     </head>
 
     <body class="base-background">
-        <nav class="flex items-center justify-between px-4 py-6 navbar-background">
+        <nav class="flex items-center justify-between p-4 navbar-background">
             <div>
                 {% if request.user.is_authenticated %}
                     {% if request.user.isHelper %}
-                        <a href="{% url 'core:helperMenu' %}" class="text-xl text-white">Virtual grandparent</a>
+                        <a href="{% url 'core:helperMenu' %}" class="text-xl text-white">Virtual Grandparent</a>
                     {% else %}
-                        <a href="{% url 'core:menu' %}" class="text-xl text-white">Virtual grandparent</a>
+                        <a href="{% url 'core:menu' %}" class="text-xl text-white">Virtual Grandparent</a>
                     {% endif %}
                 {% else %}
-                    <a href="/" class="text-xl text-white">Virtual grandparent</a>
+                    <a href="/" class="text-xl text-white">Virtual Grandparent</a>
                 {% endif %}
             </div>
             <div class="flex items-center space-x-4">
@@ -41,12 +41,16 @@
                     <a href="{% url 'authentication:login' %}" class="text-white hover:text-gray-300">Login</a>
                     <a href="{% url 'authentication:signup' %}" class="px-5 py-3 rounded-xl base-button">Sign up</a>
                 {% endif %}
-
-                <div class="dropdown pl-5" style="float:right;">
-                    <i class="fa fa-cog text-white dropbtn" style="font-size: 1.5rem;"></i>
-                    <div class="dropdown-content">
-                        <a class="inc" href="#">Increase font</a>
-                        <a class="dec" href="#">Decrease font</a>
+                <div class="right_wrap">
+                    <div class="right1">
+                        <a class="text-white inc" style="font-size: 1.25rem;">
+                            <i class="fa fa-arrow-up ">A</i>
+                        </a>
+                    </div>
+                    <div class="right2">
+                        <a class="text-white dec" style="font-size: 0.75rem;">
+                            <i class="fa fa-arrow-down ">A</i>
+                        </a>
                     </div>
                 </div>
             </div>

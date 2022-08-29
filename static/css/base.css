@@ -180,3 +180,16 @@ hr {
 .dropdown:hover .dropdown-content {
     display: block;
 }
+.right_wrap {
+    width: 100px;
+    float: left;
+    text-align: center;
+}
+.right1 a:hover, .right2 a:hover {
+    opacity: 0.7;
+}
+.quote{
+    padding: 1rem 6rem;
+    color: gray;
+    font-style: italic;
+}

@@ -9,36 +9,49 @@
 
 
 {% block content %}
-<!-- <div class="p-10 lg:p-20 ">
-    <p class="align-text">“One person caring about another represents life’s greatest value.” – Jim Rohn</p>
-</div> -->
-<div class="grid-container pl-10 pr-10">
-    <div class="col-md-6 card">
-        <img src="{% static 'images/icon-help.png' %}" class="card-image" alt="Helper icon">
+<div class="p-4 grid-container inline-container">
+    <div class="card single-card help_container px-8" style="width:100%">
+        <div class="column-title selected">
+            <h1 class="text-3xl">About us</h1>
+        </div>
+        <p>Virtual Grandparent is a multipurpose online project to help connect helpers with the older generation, by specifying a purpose of connection.</p>
+        <p>This projects aims to improve the quality of life of older generations through various means of support, including home visits, social activities, technology support, transportation, and much much more.</p>
+        <p class="quote">"Giving back is as good for you as it is for those you are helping, because giving gives you purpose. When you have a purpose-driven life, you’re a happier person" — Goldie Hawn</p>
+        <div class="column-title selected">
+            <h1 class="text-3xl">Are you a person in need?</h1>
+        </div>
+        Sign up as a beneficiary, create a help request and we will connect you to suitable volunteers. Once you have candidate helpers, accept the one that matches your needs.
+        <div class="column-title selected mt-4">
+            <h1 class="text-3xl">Are you a volunteer?</h1>
+        </div>
+        Sign up as a helper and offer your time for any scale of activity, from helping unlock a phone to helping moving out or daily chatting.
+        <div class="grid-container">
+        <div class="col-md-6 card" style="margin:0">
+            <img src="{% static 'images/icon-old.png' %}" class="card-image" alt="Old person icon">
 
-        <p class="card-title">Join as a volunteer</p>
-        <p>Are you looking to befriend an elder person? Join to the volunteer community to start helping.</p>
+            <p class="card-title">Join as beneficiary</p>
+            <p>Join as an elder person and share your experience and needs to connect with someone else.</p>
+            <br />
+            <a href="{% url 'authentication:signup' %}" class="px-5 py-3 rounded-xl base-button large-button">Sign up</a>
+        </div>
+        <div class="col-md-6 card card-left" style="margin:0">
+            <img src="{% static 'images/icon-help.png' %}" class="card-image" alt="Helper icon">
+
+            <p class="card-title">Join as a volunteer</p>
+            <p>Are you looking to befriend an elder person? Join to the volunteer community to start helping.</p>
+            
+            <br />
+            <a href="{% url 'authentication:signup' %}" class="px-5 py-3 rounded-xl base-button large-button">Sign up</a>
+        </div>
+
         
-        <br />
-        <a href="{% url 'authentication:signup' %}" class="px-5 py-3 rounded-xl base-button large-button">Sign up</a>
-    </div>
-
-    <div class="col-md-6 card card-left">
-        <img src="{% static 'images/icon-old.png' %}" class="card-image" alt="Old person icon">
-
-        <p class="card-title">Ask for help</p>
-        <p>Join as an elder person and share your experience and needs to connect with someone else.</p>
-        <p>You can specify a motive like Phone calls/chatting, Technology help, Social activities and more on.</p>
-        
-        <br />
-        <a href="{% url 'authentication:signup' %}" class="px-5 py-3 rounded-xl base-button large-button">Sign up</a>
     </div>
 </div>
-
+</div>
 <!-- <p>“One person caring about another represents life’s greatest value.” – Jim Rohn</p>
 <p>The simple act of caring is heroic. – Edward Albert</p>
 <div class="p-10 lg:p-20 text-center">
-    <h1 class="text-3xl lg:text-6xl">Virtual grandparent</h1>
+    <h1 class="text-3xl lg:text-6xl">Virtual Grandparent</h1>
 
 </div> -->
 {% endblock %}

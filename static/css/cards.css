@@ -41,6 +41,11 @@
     page-break-inside: avoid;
     break-inside: avoid;
 }
+.panel {
+    width: 100%;
+    padding: 2rem;
+    text-align: center;
+}
 .orange{
     background: rgba(238,108,67,0.65);
 }
