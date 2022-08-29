@@ -8,6 +8,8 @@
         <title>{% block title %}{% endblock %}Virtual grandparent</title>
         <link rel="icon"href="{% static 'favicon.ico' %}">
         <link rel="stylesheet" href="{% static 'css/base.css' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
         {% block static %}
         {% endblock %}
     </head>
@@ -39,9 +41,16 @@
                     <a href="{% url 'authentication:login' %}" class="text-white hover:text-gray-300">Login</a>
                     <a href="{% url 'authentication:signup' %}" class="px-5 py-3 rounded-xl base-button">Sign up</a>
                 {% endif %}
+
+                <div class="dropdown pl-5" style="float:right;">
+                    <i class="fa fa-cog text-white dropbtn" style="font-size: 1.5rem;"></i>
+                    <div class="dropdown-content">
+                        <a class="inc" href="#">Increase font</a>
+                        <a class="dec" href="#">Decrease font</a>
+                    </div>
+                </div>
             </div>
         </nav>
-
 
         <div class="container-background">
             <img src="{% static 'images/background.jpg' %}" class="img-fluid stretch" alt="Two persons">
@@ -51,6 +60,8 @@
         {% endblock %}
 
         <script src="https://cdn.tailwindcss.com"></script>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script type="text/javascript" src="{% static 'js/base.js' %}"></script>
         {% block scripts %}
         {% endblock %}
     </body>
