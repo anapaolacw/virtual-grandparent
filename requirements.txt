@@ -86,6 +86,7 @@ gevent @ file:///opt/concourse/worker/volumes/live/014e1366-b455-480b-61a8-9a69e
 glob2 @ file:///home/linux1/recipes/ci/glob2_1610991677669/work
 gmpy2==2.0.8
 greenlet @ file:///opt/concourse/worker/volumes/live/b27b4e9e-4697-4d57-403b-f82d36a391ca/volume/greenlet_1628888146890/work
+gunicorn==20.1.0
 h5py @ file:///opt/concourse/worker/volumes/live/e7503571-c7b1-45ac-4bb7-37b5178cb0df/volume/h5py_1622088436205/work
 HeapDict @ file:///Users/ktietz/demo/mc3/conda-bld/heapdict_1630598515714/work
 html5lib @ file:///Users/ktietz/demo/mc3/conda-bld/html5lib_1629144453894/work
