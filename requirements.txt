@@ -70,8 +70,10 @@ decorator @ file:///tmp/build/80754af9/decorator_1632776554403/work
 defusedxml @ file:///tmp/build/80754af9/defusedxml_1615228127516/work
 diff-match-patch @ file:///Users/ktietz/demo/mc3/conda-bld/diff-match-patch_1630511840874/work
 distributed @ file:///opt/concourse/worker/volumes/live/34c9adba-e95e-473d-7a32-ecdf958a8844/volume/distributed_1635968220957/work
+dj-database-url==1.0.0
 Django==4.0.2
 django-crispy-forms==1.14.0
+django-on-heroku==1.1.2
 docutils @ file:///opt/concourse/worker/volumes/live/c87e10af-317d-45cb-7142-3d02053858ee/volume/docutils_1620827978243/work
 entrypoints==0.3
 et-xmlfile==1.1.0
@@ -180,6 +182,7 @@ poyo @ file:///tmp/build/80754af9/poyo_1617751526755/work
 prometheus-client @ file:///tmp/build/80754af9/prometheus_client_1623189609245/work
 prompt-toolkit @ file:///tmp/build/80754af9/prompt-toolkit_1633440160888/work
 psutil @ file:///opt/concourse/worker/volumes/live/da41f1b1-060b-47fa-4c17-557e069ead1d/volume/psutil_1612298011002/work
+psycopg2-binary==2.9.3
 ptyprocess @ file:///tmp/build/80754af9/ptyprocess_1609355006118/work/dist/ptyprocess-0.7.0-py2.py3-none-any.whl
 py @ file:///tmp/build/80754af9/py_1607971587848/work
 pyasn1==0.4.8
@@ -279,6 +282,7 @@ wcwidth @ file:///Users/ktietz/demo/mc3/conda-bld/wcwidth_1629357192024/work
 webencodings==0.5.1
 Werkzeug @ file:///tmp/build/80754af9/werkzeug_1635505089296/work
 whichcraft @ file:///tmp/build/80754af9/whichcraft_1617751293875/work
+whitenoise==6.2.0
 widgetsnbextension @ file:///opt/concourse/worker/volumes/live/42762d5a-6520-4b06-68a2-619dfed6a007/volume/widgetsnbextension_1607531500933/work
 wrapt @ file:///opt/concourse/worker/volumes/live/1381ca3b-f984-4f5c-4f46-a67ca4eeffa5/volume/wrapt_1607574524589/work
 wurlitzer @ file:///opt/concourse/worker/volumes/live/f0d9880a-118b-4ba3-7b92-3c5bb0f6c00b/volume/wurlitzer_1626947802781/work
