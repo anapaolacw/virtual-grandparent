@@ -2,6 +2,12 @@
     display: flex;
     padding: 10px;
 }
+/* Responsive layout - makes a one column layout instead of a two-column layout */
+@media (max-width: 650px) {
+  .flexbox_items {
+    flex-direction: column;
+  }
+}
 img.flex_item{
   max-width: 15rem;
   max-height: 15rem;
@@ -24,10 +30,14 @@ img.flex_item{
   margin-left: auto;
   margin-right: auto;
 }
-
 .button-50 {
   width: 49%;
   text-align: center;
+}
+@media (max-width: 650px) {
+  .button-50 {
+    width:100%;
+  }
 }
 .help_container{
   box-shadow: none;

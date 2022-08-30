@@ -3,6 +3,7 @@
 
 {% block static %}
 <link rel="stylesheet" href="{% static 'css/cards.css' %}">
+<link rel="stylesheet" href="{% static 'css/container.css' %}">
 <link rel="stylesheet" href="{% static 'css/flexbox.css' %}">
 
 {% endblock %}
@@ -12,7 +13,7 @@
 
 {% block content %}
 <div class="p-4 grid-container inline-container">
-    <div class="card flexbox_container single-card help_container px-8">
+    <div class="card flexbox_container single-card help_container px-8 m-0" >
         <div class="column column-title selected">
             <a href="{% url 'core:createHelpRequest' %}">Help Requests</a>
         </div>
@@ -29,7 +30,7 @@
     {% endif %}
     
     {% for help in help_requests %}
-        <div class="card flexbox_container">
+        <div class="card flexbox_container flexbox_items m-0" style="width: 100%; margin-bottom: 3%">
             {% with 'images/helpCategories/'|add:help.category|add:'.png' as image_static %}
             <img class="flex_item" src="{% static image_static %}" alt="{{help.get_category_display}} icon">
             {% endwith %}
@@ -52,7 +53,7 @@
                 {% endif %}
             
                 <br />
-                <div class="button-container">
+                <div class="button-container responsive-container">
                     <a href="{% url 'core:editHelpRequest' help.id %}" class="px-5 py-3 rounded-xl base-button gray-button button-50 mr-1">
                         <i class="fa fa-edit fa-space" aria-hidden="true"></i>Edit request
                     </a>

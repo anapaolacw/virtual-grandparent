@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block static %}
+<link rel="stylesheet" href="{% static 'css/container.css' %}">
 <link rel="stylesheet" href="{% static 'css/cards.css' %}">
 {% endblock %}
 
@@ -25,27 +26,25 @@
             <h1 class="text-3xl">Are you a volunteer?</h1>
         </div>
         Sign up as a helper and offer your time for any scale of activity, from helping unlock a phone to helping moving out or daily chatting.
-        <div class="grid-container">
-        <div class="col-md-6 card" style="margin:0">
-            <img src="{% static 'images/icon-old.png' %}" class="card-image" alt="Old person icon">
+        <div class="container mt-4">
+            <div class="container-card">
+                <img src="{% static 'images/icon-old.png' %}" class="card-image" alt="Old person icon">
 
-            <p class="card-title">Join as beneficiary</p>
-            <p>Join as an elder person and share your experience and needs to connect with someone else.</p>
-            <br />
-            <a href="{% url 'authentication:signup' %}" class="px-5 py-3 rounded-xl base-button large-button">Sign up</a>
+                <p class="card-title">Join as beneficiary</p>
+                <p>Join as an elder person and share your experience and needs to connect with someone else.</p>
+                <br />
+                <a href="{% url 'authentication:signup' %}" class="px-5 py-3 rounded-xl base-button large-button">Sign up</a>
+            </div>
+            <div class="container-card">
+                <img src="{% static 'images/icon-help.png' %}" class="card-image" alt="Helper icon">
+
+                <p class="card-title">Join as a volunteer</p>
+                <p>Are you looking to befriend an elder person? Join to the volunteer community to start helping.</p>
+                
+                <br />
+                <a href="{% url 'authentication:signup' %}" class="px-5 py-3 rounded-xl base-button large-button">Sign up</a>
+            </div>
         </div>
-        <div class="col-md-6 card card-left" style="margin:0">
-            <img src="{% static 'images/icon-help.png' %}" class="card-image" alt="Helper icon">
-
-            <p class="card-title">Join as a volunteer</p>
-            <p>Are you looking to befriend an elder person? Join to the volunteer community to start helping.</p>
-            
-            <br />
-            <a href="{% url 'authentication:signup' %}" class="px-5 py-3 rounded-xl base-button large-button">Sign up</a>
-        </div>
-
-        
     </div>
-</div>
 </div>
 {% endblock %}

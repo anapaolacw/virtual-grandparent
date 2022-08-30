@@ -5,7 +5,7 @@
     --orange: #ee6c4d;
     --dark-blue: #293241;
     --gray: #333333;
-}
+} 
 .title{
     color: var(--dark-blue);
     font-size: 2.5rem;
@@ -197,3 +197,4 @@ hr {
     color: gray;
     font-style: italic;
 }
+
