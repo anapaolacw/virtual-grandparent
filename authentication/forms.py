@@ -24,7 +24,7 @@ class SignupForm(BootstrapModelForm):
     email= forms.CharField(widget= forms.EmailInput
                            (attrs={'placeholder':'Email'}))
     phoneNumber= forms.CharField(widget= forms.TextInput
-                           (attrs={'placeholder':'Phone Number (xxx)xxx-xxxx'}), max_length=10)
+                           (attrs={'placeholder':'Phone Number'}), max_length=11)
     password = forms.CharField(required=True, widget=forms.PasswordInput
                                             (attrs={'placeholder':'Password'}))
     confirmPassword = forms.CharField(required=True,widget=forms.PasswordInput

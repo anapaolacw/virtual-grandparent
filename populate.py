@@ -46,7 +46,7 @@ def populate_users():
             "name": "Ana Paola Chazaro Watty",
             "email": "apcw96@gmail.com",
             "password": "123123",
-            "phoneNumber": "7510302811",
+            "phoneNumber": "07510302811",
             "dateOfBirth": dateOfBirth,
             "isHelper": True
         },
@@ -54,7 +54,7 @@ def populate_users():
             "name": "Charlotte Chen",
             "email": "charlotte@gmail.com",
             "password": "123123",
-            "phoneNumber": "7510302811",
+            "phoneNumber": "07510302811",
             "dateOfBirth": dateOfBirth,
             "isHelper": False
         },
@@ -62,7 +62,7 @@ def populate_users():
             "name": "Joseph Chen",
             "email": "joseph@gmail.com",
             "password": "123123",
-            "phoneNumber": "7510302811",
+            "phoneNumber": "07510302811",
             "dateOfBirth": dateOfBirth,
             "isHelper": False
         },
@@ -70,7 +70,7 @@ def populate_users():
             "name": "Samuel Jakobson",
             "email": "samuel@gmail.com",
             "password": "123123",
-            "phoneNumber": "7510302811",
+            "phoneNumber": "07510302811",
             "dateOfBirth": dateOfBirth,
             "isHelper": False
         },
@@ -78,7 +78,7 @@ def populate_users():
             "name": "Daniel Chazaro Watty",
             "email": "daniel@gmail.com",
             "password": "123123",
-            "phoneNumber": "7510302811",
+            "phoneNumber": "07510302811",
             "dateOfBirth": dateOfBirth,
             "isHelper": True
         },
@@ -86,7 +86,7 @@ def populate_users():
             "name": "Paul Jones",
             "email": "paul@gmail.com",
             "password": "123123",
-            "phoneNumber": "7510302811",
+            "phoneNumber": "07510302811",
             "dateOfBirth": dateOfBirth,
             "isHelper": False
         },
@@ -94,7 +94,7 @@ def populate_users():
             "name": "Jessica Lin",
             "email": "jessica@gmail.com",
             "password": "123123",
-            "phoneNumber": "7510302811",
+            "phoneNumber": "07510302811",
             "dateOfBirth": dateOfBirth,
             "isHelper": True
         },
@@ -102,7 +102,7 @@ def populate_users():
             "name": "Manika Gupta",
             "email": "manika@gmail.com",
             "password": "123123",
-            "phoneNumber": "7510302811",
+            "phoneNumber": "07510302811",
             "dateOfBirth": dateOfBirth,
             "isHelper": True
         },
@@ -110,7 +110,7 @@ def populate_users():
             "name": "Olivia Williams",
             "email": "helper@gmail.com",
             "password": "123123",
-            "phoneNumber": "7510302811",
+            "phoneNumber": "07510302811",
             "dateOfBirth": dateOfBirth,
             "isHelper": True
         },
@@ -118,7 +118,7 @@ def populate_users():
             "name": "Michael Smith",
             "email": "oldPerson@gmail.com",
             "password": "123123",
-            "phoneNumber": "7510302811",
+            "phoneNumber": "07510302811",
             "dateOfBirth": dateOfBirth,
             "isHelper": False
         }

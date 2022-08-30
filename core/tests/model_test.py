@@ -50,7 +50,7 @@ def populate_users():
             "name": "Ana Paola Chazaro Watty",
             "email": "apcw96@gmail.com",
             "password": "123123",
-            "phoneNumber": "7510302811",
+            "phoneNumber": "07510302811",
             "dateOfBirth": dateOfBirth,
             "isHelper": True
         },
@@ -58,7 +58,7 @@ def populate_users():
             "name": "Samuel Jakobson",
             "email": "samuel@gmail.com",
             "password": "123123",
-            "phoneNumber": "7510302811",
+            "phoneNumber": "07510302811",
             "dateOfBirth": dateOfBirth,
             "isHelper": False
         },
