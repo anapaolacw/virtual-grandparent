@@ -45,7 +45,6 @@ $(document).ready(function() {
       redirectUrl = e.target.href;
       window.location.href = redirectUrl;
     }else{
-      alert(isVerified)
       console.log(e.target.href);
       notification("Account not verified", "To offer help, our team must verify your identity. Please check your email to arrange a meeting.", "info", "Ok")
   
@@ -79,6 +78,7 @@ $(document).ready(function() {
         }).then(response => {
           var getUrl = window.location;
           var redirectUrl = getUrl.protocol + "//" + getUrl.host + data;
+          console.log(redirectUrl);
           window.location.href = redirectUrl;
         })
     },
