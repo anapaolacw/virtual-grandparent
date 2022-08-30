@@ -41,17 +41,17 @@
                 <p>{{ help.description }}</p>
                 <p class="flex_title">Date of request:</p>
                 <p>{{ help.date }}</p>
-                <p class="flex_title">Helper:</p>
+                
                 {% if help.helper is None %}
+                    <p class="flex_title">Helper: <i class="fa fa-clock-o " aria-hidden="true" style="font-size: xx-large; color: orange;"></i></p>
                     {% if help.candidates %}
-                        <i class="fa fa-clock-o " aria-hidden="true" style="font-size: xx-large; color: orange;"></i>
                         No helper assigned yet, but there are <a class="link-text" href="{% url 'core:getCandidates' help.id %}">{{help.candidates.count}} candidates (click here to see candidates)</a> 
                     {% else %}
                         <p>No helper assigned yet
                     {% endif %}
                     </p>
                 {% else %}
-                    <i class="fa fa-check" aria-hidden="true" style="font-size: xx-large; color: green;"></i>
+                    <p class="flex_title">Helper: ><i class="fa fa-check" aria-hidden="true" style="font-size: xx-large; color: green;"></i></p>
                     <p>{{help.helper.user.name}}</p>
                 {% endif %}
             
