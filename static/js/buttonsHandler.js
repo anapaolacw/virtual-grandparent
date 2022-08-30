@@ -78,6 +78,7 @@ $(document).ready(function() {
         }).then(response => {
           var getUrl = window.location;
           var redirectUrl = getUrl.protocol + "//" + getUrl.host + data;
+          console.log(redirectUrl);
           window.location.href = redirectUrl;
         })
     },
