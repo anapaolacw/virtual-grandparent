@@ -1,1 +1,1 @@
-web: gunicorn virtualgrandparent.wsgi
+web: gunicorn virtualgrandparent.wsgi --log-file -

@@ -1,0 +1,39 @@
+.flexbox_container {
+    display: flex;
+    padding: 10px;
+}
+img.flex_item{
+  max-width: 15rem;
+  max-height: 15rem;
+}
+.flex_item {
+  padding: 10px;
+  flex-grow: 1;
+  margin-right: 30px;
+}
+
+.flex_title{
+  color: gray;
+  font-weight: bold;
+  margin-top: 5px;
+}
+.button-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.button-50 {
+  width: 49%;
+  text-align: center;
+}
+.help_container{
+  box-shadow: none;
+  margin-bottom: -2rem;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  padding: 0;
+  padding-top: 2rem;
+}
