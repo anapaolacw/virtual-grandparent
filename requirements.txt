@@ -1,8 +1,13 @@
 asgiref==3.5.0
 channels==3.0.5
+coverage==6.4.4
 Django==4.0.2
-django_on_heroku==1.1.2
+django-crispy-forms==1.14.0
+django-on-heroku==1.1.2
+gunicorn==20.1.0
+json5==0.9.6
+pip==21.2.4
 scikit_learn==1.1.2
 SQLAlchemy==1.4.22
 tables==3.6.1
-
+whitenoise==6.2.0
