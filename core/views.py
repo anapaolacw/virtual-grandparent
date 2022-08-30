@@ -95,7 +95,8 @@ def getCandidates(request, id):
 def allHelpRequests(request):
     current_user = get_current_user(request)
     helper = get_helper_by_id(current_user.id)
-    help_requests = Help.objects.filter(~Q(id__in=HelpCandidates.objects.all().values('help')))
+    
+    help_requests = Help.objects.filter(helper__isnull = True)
 
     for h in help_requests:
         user = User.objects.get(email = h.oldPerson.user.email)
@@ -121,10 +122,7 @@ def myOffers(request):
         candidate = HelpCandidates.objects.filter(helper = helper, help = h).first()
         h.offerDescription = candidate.description
         h.status = candidate.get_status_display
-        accepted = next(
-            (item for item in HELP_STATUS if item[1] == 'Accepted'),
-            {}
-        )
+        
     return render(request, 'core/myOffers.html', {'help_requests': help_requests})
 
 @login_required
