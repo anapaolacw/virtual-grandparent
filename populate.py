@@ -212,7 +212,7 @@ def populate_helps():
     ]
     helps_without_helper = [
         {
-            "description": "I would appreciate having help for pinting my walls because they are very dirty",
+            "description": "I would appreciate having help for painting my walls because they are very dirty",
             "category": "HA",
             "oldPerson": random.choice(oldPersons),
             "date": random_date(d1, d2),
@@ -224,7 +224,7 @@ def populate_helps():
             "date": random_date(d1, d2),
         },
         {
-            "description": "I would like someone to take me places because I can't see anymore anad I don't want to stay at home every day",
+            "description": "I would like someone to take me places because I can't see anymore and I don't want to stay at home every day",
             "category": "TR",
             "oldPerson": random.choice(oldPersons),
             "date": random_date(d1, d2),
