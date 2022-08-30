@@ -15,7 +15,7 @@
 <div class="p-4 grid-container inline-container">
     <div class="card flexbox_container single-card help_container px-8 m-0" >
         <div class="column column-title selected">
-            <a href="{% url 'core:createHelpRequest' %}">Help Requests</a>
+            <a href="{% url 'core:createHelpRequest' %}">My Help Requests</a>
         </div>
         <div class="column column-title">
             <a href="{% url 'core:createHelpRequest' %}">Create Help Request</a>
@@ -43,25 +43,28 @@
                 <p>{{ help.date }}</p>
                 <p class="flex_title">Helper:</p>
                 {% if help.helper is None %}
-                    <p>No helper assigned yet
                     {% if help.candidates %}
-                    , but there are <a class="link-text" href="{% url 'core:getCandidates' help.id %}">{{help.candidates.count}} candidates (click here to see candidates)</a> 
+                        <i class="fa fa-clock-o " aria-hidden="true" style="font-size: xx-large; color: orange;"></i>
+                        No helper assigned yet, but there are <a class="link-text" href="{% url 'core:getCandidates' help.id %}">{{help.candidates.count}} candidates (click here to see candidates)</a> 
+                    {% else %}
+                        <p>No helper assigned yet
                     {% endif %}
                     </p>
                 {% else %}
+                    <i class="fa fa-check" aria-hidden="true" style="font-size: xx-large; color: green;"></i>
                     <p>{{help.helper.user.name}}</p>
                 {% endif %}
             
                 <br />
                 <div class="button-container responsive-container">
-                    <a href="{% url 'core:editHelpRequest' help.id %}" class="px-5 py-3 rounded-xl base-button gray-button button-50 mr-1">
-                        <i class="fa fa-edit fa-space" aria-hidden="true"></i>Edit request
-                    </a>
                     {% if help.helper %}
-                    <a href="{% url 'chat:contacts' %}" class="px-5 py-3 rounded-xl base-button large-button button-50">
+                    <a href="{% url 'chat:contacts' %}" class="px-5 py-3 rounded-xl base-button large-button">
                         <i class="fa fa-envelope fa-space" aria-hidden="true"></i>Send a message
                     </a>
                     {% elif help.candidates %}
+                    <a href="{% url 'core:editHelpRequest' help.id %}" class="px-5 py-3 rounded-xl base-button gray-button button-50 mr-1">
+                        <i class="fa fa-edit fa-space" aria-hidden="true"></i>Edit request
+                    </a>
                     <a href="{% url 'core:getCandidates' help.id  %}" class="px-5 py-3 rounded-xl base-button large-button button-50">
                         <i class="fa fa-users fa-space" aria-hidden="true"></i>See candidates
                     </a>
