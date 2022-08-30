@@ -33,7 +33,7 @@
                 <p class="card-title">Join as beneficiary</p>
                 <p>Join as an elder person and share your experience and needs to connect with someone else.</p>
                 <br />
-                <a href="{% url 'authentication:signup' %}" class="px-5 py-3 rounded-xl base-button large-button">Sign up</a>
+                <a href="{% url 'authentication:signup' 'beneficiary' %}" class="px-5 py-3 rounded-xl base-button large-button">Sign up</a>
             </div>
             <div class="container-card">
                 <img src="{% static 'images/icon-help.png' %}" class="card-image" alt="Helper icon">
@@ -42,7 +42,7 @@
                 <p>Are you looking to befriend an elder person? Join to the volunteer community to start helping.</p>
                 
                 <br />
-                <a href="{% url 'authentication:signup' %}" class="px-5 py-3 rounded-xl base-button large-button">Sign up</a>
+                <a href="{% url 'authentication:signup' 'helper' %}" class="px-5 py-3 rounded-xl base-button large-button">Sign up</a>
             </div>
         </div>
     </div>

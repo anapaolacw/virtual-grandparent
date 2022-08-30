@@ -13,6 +13,7 @@
 <script type="text/javascript" src="{% static 'js/datepicker.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/buttonsHandler.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/buttonNotification.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/signup.js' %}"></script>
 {% endblock %}
 
 {% block title %}Sign up | {% endblock %}
@@ -22,20 +23,21 @@
     <div class="col-md-6 single-card lg:w-2/3 p-8 mx-auto ">
         <div class="row mx-auto">
             <div class="column column-title selected">
-                <a href="{% url 'authentication:signup' %}">Sign up</a>
+                <a href="{% url 'authentication:signup' 'beneficiary' %}">Sign up</a>
             </div>
             <div class="column column-title">
                 <a href="{% url 'authentication:login' %}">Login</a>
             </div>
         </div> 
-        <form method="post" id="signupForm" action="{% url 'authentication:signup'%}" class="mx-auto" style="padding: 0 5%;" enctype="multipart/form-data">
+        <form method="post" id="signupForm" action="{% url 'authentication:signup' 'beneficiary' %}" class="mx-auto" style="padding: 0 5%;" enctype="multipart/form-data">
             {% csrf_token %}
             {% for field in form %}
             <fieldset class="mb-5">
                 <div class="custom-wrapper">
                     {{field}}
                     {% if field.field.widget.input_type == "checkbox" %}
-                        <label style="color:gray" for="{{ field.id }}">{{ field.label }}</label>
+                    {{field.field.name}}
+                        <label style="color:gray" id="label_{{field.name}}" for="{{ field.name }}">{{ field.label }}</label>
                     {% else %}
                         <i class="{{ field.field.icon }} input-icon"></i>
                     {% endif %}
@@ -56,5 +58,6 @@
         </p>
     </div>
 </div>
+<p id="typeOfUser">{{typeOfUser}}</p>
 
 {% endblock %}

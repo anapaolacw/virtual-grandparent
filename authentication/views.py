@@ -12,7 +12,7 @@ from django.contrib.auth import get_user_model
 from django.http import HttpResponse
 User = get_user_model()
 # Create your views here.
-def signup(request):
+def signup(request, typeOfUser):
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
@@ -31,7 +31,7 @@ def signup(request):
             return HttpResponse(reverse('core:menu'))
 
     form = SignupForm()
-    return render(request, 'authentication/signup.html', {'form': form })
+    return render(request, 'authentication/signup.html', {'form': form, 'typeOfUser': typeOfUser })
 
 def login(request):
     error_message = None

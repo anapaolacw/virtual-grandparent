@@ -38,7 +38,7 @@
                     <a href="{% url 'authentication:logout' %}" class="px-5 py-3 rounded-xl base-button">Log out</a>
                 {% else %}
                     <a href="{% url 'authentication:login' %}" class="text-white hover:text-gray-300">Login</a>
-                    <a href="{% url 'authentication:signup' %}" class="px-5 py-3 rounded-xl base-button">Sign up</a>
+                    <a href="{% url 'authentication:signup' 'beneficiary' %}" class="px-5 py-3 rounded-xl base-button">Sign up</a>
                 {% endif %}
                 <div class="right_wrap">
                     <div class="right1">
