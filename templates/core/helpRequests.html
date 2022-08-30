@@ -44,14 +44,19 @@
                 
                 {% if help.helper is None %}
                     <p class="flex_title">Helper: <i class="fa fa-clock-o " aria-hidden="true" style="font-size: xx-large; color: orange;"></i></p>
+                    <div class="mt-1 px-4 py-2 rounded-xl bg-orange-300">
+                        <p>Candidates awaiting approval</p>
+                    </div>
                     {% if help.candidates %}
-                        No helper assigned yet, but there are <a class="link-text" href="{% url 'core:getCandidates' help.id %}">{{help.candidates.count}} candidates (click here to see candidates)</a> 
+                        <p>No helper assigned yet, but there are <a class="link-text" href="{% url 'core:getCandidates' help.id %}">{{help.candidates.count}} candidates (click here to see candidates)</a> </p>
                     {% else %}
-                        <p>No helper assigned yet
+                        <p>Waiting for candidates</p>
                     {% endif %}
-                    </p>
                 {% else %}
-                    <p class="flex_title">Helper: ><i class="fa fa-check" aria-hidden="true" style="font-size: xx-large; color: green;"></i></p>
+                    <p class="flex_title">Helper: <i class="fa fa-check " aria-hidden="true" style="font-size: xx-large; color: green;"></i></p>
+                    <div class="mt-1 px-4 py-2 rounded-xl bg-green-300">
+                        <p>Helper matched</p>
+                    </div>
                     <p>{{help.helper.user.name}}</p>
                 {% endif %}
             
