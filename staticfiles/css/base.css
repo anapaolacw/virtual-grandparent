@@ -95,6 +95,10 @@
     color: white;
     background: var(--light-blue);
 }
+.row{
+    display: -webkit-flex; /* Safari */     
+    display: flex;
+}
 /* Clear floats after the columns */
 .row:after {
     content: "";
@@ -189,7 +193,7 @@ hr {
     opacity: 0.7;
 }
 .quote{
-    padding: 1rem 6rem;
+    padding: 15px 10%;
     color: gray;
     font-style: italic;
 }

@@ -9,10 +9,7 @@
 .grid-container{
     margin: 20px auto;
     display:grid;
-    grid-template-columns: 40% 40%;;
-    grid-row: auto auto;
-    grid-column-gap: 3rem;
-    grid-row-gap: 2rem;
+    grid-template-columns: auto auto;
     padding: 2px 16px;
     text-align: center;
     justify-content: center;
@@ -55,6 +52,8 @@
     border-radius: 5px;
     background: rgba(255, 255, 255, 0.75);
     text-align: left;
+    width: 100%;
+    margin-left: 2px;
   
     -webkit-column-break-inside: avoid;
     page-break-inside: avoid;

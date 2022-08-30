@@ -9,8 +9,6 @@
 {% block scripts %}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 <script type="text/javascript" src="{% static 'js/buttonsHandler.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/buttonNotification.js' %}"></script>
 {% endblock %}
@@ -19,9 +17,9 @@
 
 
 {% block content %}
-<div class="p-10 grid-container inline-container">
+<div class="p-4 grid-container inline-container">
 
-    <div class="card single-card help_container px-8" style="width:100%">
+    <div class="card single-card help_container px-8">
         <div class="flexbox_container">
             <div class="column column-title selected">
                 <a href="{% url 'core:editHelpOffer' id %}">Edit Help Offer</a>

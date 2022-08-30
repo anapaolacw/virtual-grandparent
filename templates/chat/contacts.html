@@ -12,17 +12,15 @@
 {% block scripts %}
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 {% endblock %}
 
 
 {% block title %}Chats | {% endblock %}
 
 {% block content %}
-<div class="p-10 grid-container inline-container">
+<div class="p-4 grid-container inline-container">
 
-    <div class="card single-card help_container px-8" style="width:100%">
+    <div class="card single-card help_container px-8">
         <div class="flexbox_container">
             <div class="column column-title selected">
                 <a href="{% url 'chat:contacts' %}">Contacts</a>
@@ -45,18 +43,18 @@
             </p>
         {% else %}
         
-        <table class="table table-striped" style="width:100%">
-            <thead>
-            <tr>
-                <th scope="col" width="20%">Contact name</th>
-                <th scope="col" width="20%">Email</th>
-                <th scope="col" width="40%">Help Description</th>
-                <th scope="col" width="20%"></th>
-            </tr>
+        <table role="table" class="table table-striped" style="width:100%">
+            <thead role="rowgroup">
+                <tr role="row">
+                    <th scope="col" width="20%">Contact name</th>
+                    <th scope="col" width="20%">Email</th>
+                    <th scope="col" width="40%">Help Description</th>
+                    <th scope="col" width="20%"></th>
+                </tr>
             </thead>
-            <tbody id="requestTable">
+            <tbody id="requestTable" role="rowgroup">
                 {% for c in contacts %}
-                <tr>
+                <tr role="row">
                     <td>
                         <p>{{ c.name }}</p>
                     </td>

@@ -10,8 +10,6 @@
 {% block scripts %}
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 <script type="text/javascript" src="{% static 'js/buttonsHandler.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/buttonNotification.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/tableHandler.js' %}"></script>
@@ -21,8 +19,8 @@
 
 
 {% block content %}
-<div class="py-10 grid-container inline-container">
-    <div class="card single-card help_container px-8" style="width:100%">
+<div class="py-4 grid-container inline-container">
+    <div class="card single-card help_container px-8">
         <div class="flexbox_container">
             <div class="column column-title selected">
                 <a href="{% url 'core:allHelpRequests' %}">Help Request list</a>

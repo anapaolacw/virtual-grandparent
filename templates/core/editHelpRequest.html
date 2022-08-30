@@ -9,8 +9,6 @@
 {% block scripts %}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 <script type="text/javascript" src="{% static 'js/buttonsHandler.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/buttonNotification.js' %}"></script>
 {% endblock %}
@@ -21,7 +19,7 @@
 {% block content %}
 <div class="card-container p-10">
     <div class="col-md-6 single-card lg:w-2/3 p-8 mx-auto">
-        <div class="row px-8 mx-auto">
+        <div class="row mx-auto">
             <div class="column column-title selected">
                 <a href="{% url 'core:editHelpRequest' id %}">Edit Help Request</a>
             </div>
@@ -29,7 +27,7 @@
                 <a href="{% url 'core:helpRequests' %}">Help Requests</a>
             </div>
         </div> 
-        <form method="post" id="editForm" action="{% url 'core:editHelpRequest' id %}" class="px-8 mx-auto"  enctype="multipart/form-data">
+        <form method="post" id="editForm" action="{% url 'core:editHelpRequest' id %}" class="mx-auto" style="padding: 0 5%;" enctype="multipart/form-data">
             {% csrf_token %}
 
             {% for field in form %}
