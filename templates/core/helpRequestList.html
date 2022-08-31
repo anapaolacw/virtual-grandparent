@@ -64,7 +64,7 @@
                         <td class="vertically-centered">{{help.description}}</td>
                         <td class="vertically-centered">{{help.date}}</td>
                         <td class="vertically-centered">
-                            <a id="btnOfferHelp" href="{% url 'core:createHelpOffer' help.id %}"  class="px-5 py-3 block rounded-xl base-button">
+                            <a id={{help.id}} href="{% url 'core:createHelpOffer' help.id %}"  class="btnOfferHelp px-5 py-3 block rounded-xl base-button">
                                 <i class="fa fa-plus fa-space" aria-hidden="true"></i>
                                 Offer help
                             </a>
@@ -76,5 +76,5 @@
         {% endif %}
     </div>
 </div>
-<p id="isVerified" style="display:none">{{isVerified}}</p>
+<p id="isVerified" >{{isVerified}}</p>
 {% endblock %}

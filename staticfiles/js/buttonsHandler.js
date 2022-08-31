@@ -37,7 +37,7 @@ $(document).ready(function() {
   })
 
   //Offer help button
-  $('#btnOfferHelp').on('click',function(e){
+  $('.btnOfferHelp').on('click',function(e){
     e.preventDefault();
     isVerified = $('#isVerified').text().trim();
     if(isVerified == "True"){

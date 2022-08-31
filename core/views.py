@@ -104,6 +104,8 @@ def allHelpRequests(request):
         h.oldPersonName = user.name
 
     isVerified = helper.isVerified
+    print("Is verified")
+    print(isVerified)
     return render(request, 'core/helpRequestList.html', {'help_requests': help_requests, 'isVerified': isVerified})
 
 @login_required
