@@ -107,8 +107,8 @@ def populate_users():
             "isHelper": True
         },
         {
-            "name": "Olivia Williams",
-            "email": "helper@gmail.com",
+            "name": "Hannah Huges",
+            "email": "hannah@gmail.com",
             "password": "123123",
             "phoneNumber": "07510302811",
             "dateOfBirth": dateOfBirth,
@@ -116,6 +116,14 @@ def populate_users():
         },
         {
             "name": "Michael Smith",
+            "email": "helper@gmail.com",
+            "password": "123123",
+            "phoneNumber": "07510302811",
+            "dateOfBirth": dateOfBirth,
+            "isHelper": True
+        },
+        {
+            "name": "Linda Thomas",
             "email": "oldPerson@gmail.com",
             "password": "123123",
             "phoneNumber": "07510302811",
