@@ -29,7 +29,7 @@ class SignupForm(BootstrapModelForm):
                                             (attrs={'placeholder':'Password'}))
     confirmPassword = forms.CharField(required=True,widget=forms.PasswordInput
                                             (attrs={'placeholder':'Confirm your Password'}))
-    dateOfBirth = forms.DateField(widget=forms.DateInput(attrs={'placeholder': 'YYYY-MM-DD'}))
+    dateOfBirth = forms.DateField(widget=forms.DateInput(attrs={'placeholder': 'Date of birth (use format YYYY-MM-DD)'}))
     
     isHelper = forms.BooleanField(required=False, label='Sign up as a helper')
    

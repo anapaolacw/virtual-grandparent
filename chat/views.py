@@ -36,9 +36,6 @@ def getChat(request, contact_id):
         if not chat:
             chat = create_chat(current_user, contact)
         
-        for c in Chat.objects.all():
-            print("USers chat")
-            print(c.users.all())
         chat.receiver = contact
         chat.sender = current_user
         messages_format = get_messages_format(chat, current_user.name)
