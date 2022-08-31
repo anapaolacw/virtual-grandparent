@@ -32,9 +32,7 @@ def getChat(request, contact_id):
     try:
         current_user = get_current_user(request)
         contact = User.objects.get(id=contact_id)
-        chat = Chat.objects.filter(users=current_user).filter(users=contact).distinct()[0]
-        if not chat:
-            chat = create_chat(current_user, contact)
+        chat = get_or_create_chat(current_user, contact)
         
         chat.receiver = contact
         chat.sender = current_user
@@ -57,7 +55,7 @@ def send(request):
     contact_id = request.POST['contact_id']
     current_user = get_current_user(request)
     contact = User.objects.get(id=contact_id)
-    chat = Chat.objects.filter(users=current_user).filter(users=contact).distinct()[0]
+    chat = get_or_create_chat(current_user, contact)
     now = datetime.datetime.now()
     new_message = Message.objects.create(type="txt", content=message, time=now, sender= current_user, chat = chat)
     new_message.save()
@@ -99,3 +97,9 @@ def get_old_person_by_id(id):
 
 def get_helper_by_id(id):
     return Helper.objects.get(user_id = id)
+
+def get_or_create_chat(user1, user2):
+    chat =  Chat.objects.filter(users=user1).filter(users=user2).distinct()
+    if not chat:
+        return create_chat(user1, user2)
+    return chat[0]

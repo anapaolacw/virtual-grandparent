@@ -7,6 +7,7 @@ from core.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Help, HelpCandidates, OldPerson, Helper, HELP_STATUS
+from chat.models import Chat
 from .forms import HelpRequestForm, HelpCandidateForm
 from django.db.models import Q
 from django.urls import reverse
@@ -164,6 +165,8 @@ def acceptHelpOffer(request, id):
     help = Help.objects.get(id = helpCandidate.help.id)
     help.helper = helpCandidate.helper
     help.save()
+    get_or_create_chat(help.helper.user, help.oldPerson.user)
+
     createTransasction(help.oldPerson.user.email, helpCandidate.helper.user.email, "Help offer", "Accepted",  "User "+help.oldPerson.user.email+" accepted a help offer with id "+str(helpCandidate.id)+" offered by: "+helpCandidate.helper.user.email)
     return redirect('core:helpRequests')
 
@@ -225,4 +228,19 @@ def get_old_person_by_id(id):
 def get_helper_by_id(id):
     return Helper.objects.get(user_id = id)
 
-    
+def get_or_create_chat(user1, user2):
+    chat =  Chat.objects.filter(users=user1).filter(users=user2).distinct()
+    if not chat:
+        return create_chat(user1, user2)
+    return chat[0]
+
+def create_chat(current_user, contact):
+    print("Creating chat")
+    slug = current_user.name.split('@')[0] + contact.name.split('@')[0]
+    chat = Chat()
+    chat.slug = slug
+    print("slug " +slug)
+    chat.save()
+    chat.users.set([current_user, contact])
+    chat.save()
+    return chat
