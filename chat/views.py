@@ -28,12 +28,11 @@ def contacts(request):
     return render(request, 'chat/contacts.html', {'contacts': contacts})
 
 @login_required
-def chat(request, contact_id):
+def getChat(request, contact_id):
     try:
         current_user = get_current_user(request)
         contact = User.objects.get(id=contact_id)
-        chat = Chat.objects.filter(users__in=[current_user, contact]).first()
-
+        chat = Chat.objects.filter(users=current_user).filter(users=contact).distinct()[0]
         if not chat:
             chat = create_chat(current_user, contact)
         

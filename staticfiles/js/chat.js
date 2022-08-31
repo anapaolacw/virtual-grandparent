@@ -49,5 +49,5 @@ $(document).ready(function() {
                 console.log("An error ocurred")
             }
         });
-    }, 1000);
+    }, 5000);
 })
