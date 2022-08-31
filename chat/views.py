@@ -57,7 +57,7 @@ def send(request):
     contact_id = request.POST['contact_id']
     current_user = get_current_user(request)
     contact = User.objects.get(id=contact_id)
-    chat = Chat.objects.filter(users__in=[current_user, contact]).first()
+    chat = Chat.objects.filter(users=current_user).filter(users=contact).distinct()[0]
     now = datetime.datetime.now()
     new_message = Message.objects.create(type="txt", content=message, time=now, sender= current_user, chat = chat)
     new_message.save()
