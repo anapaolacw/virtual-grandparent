@@ -4,6 +4,7 @@
 {% block static %}
 <link rel="stylesheet" href="{% static 'css/cards.css' %}">
 <link rel="stylesheet" href="{% static 'css/chat.css' %}">
+
 {% endblock %}
 
 {% block scripts %}
@@ -18,9 +19,9 @@
 <div class="p-4 pb-0 grid-container inline-container">
 
     <div class="card single-card help_container px-8 mb-0" style="width:100%">
-        <div class="flexbox_container">
+        <div class="flexbox_container chat_container">
             <div class="column column-title selected">
-                <a href="{% url 'chat:chat' contact_id %}">Chat</a>
+                <a href="{% url 'chat:chat' contact_id %}">Chat with {{chat.receiver.name.split | first }}</a>
             </div>
             <div class="column column-title">
                 <a href="{% url 'chat:contacts' %}">Contacts</a>

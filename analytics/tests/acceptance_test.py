@@ -1,45 +1,44 @@
-import os
-import django
 import datetime
-from django.apps import apps as django_apps
+from django.test import TestCase
+from analytics.models import Transaction
+from authentication.models import User
+from django.urls import reverse
+from django.test import Client
+from core.models import Help, Helper, OldPerson, HelpCandidates
+from populate import populate_transactions
 import random
 
-# setting up environment and loading up models
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'virtualgrandparent.settings')
-django.setup()
+class AnalyticsAcceptanceTest(TestCase):
+    def setUp(self):
+        populate_users()
+        populate_old_persons()
+        populate_helpers()
+        populate_helps()
+        
+    #As a Manager, I want to be able to see a record of transactions
+    def test_use_case_get_transactions(self):
+        transaction_counter = Transaction.objects.all().count()
+        user = User.objects.first()
+        Transaction.objects.get_or_create(
+            emailUser1 = user.email, 
+            model = "Help request", 
+            action = "Created",
+            details = "New transaction is added"
+        )
+        transaction_counter_after_add = Transaction.objects.all().count()
+        #add a transaction
+        self.assertGreater(transaction_counter_after_add, transaction_counter)
 
-from core.models import *
-from chat.models import *
-from authentication.models import *
-from analytics.models import *
-
-def populate():
-    empt_tables()
-    populate_users()
-    populate_old_persons()
-    populate_helpers()
-    populate_manager()
-    populate_helps()
-    populate_help_candidates()
-    populate_chats()
-    populate_messages()
-    populate_transactions()
-
-
-def empt_tables():
-    Transaction.objects.all().delete()
-    Help.objects.all().delete()
-    HelpCandidates.objects.all().delete()
-    Message.objects.all().delete()
-    Call.objects.all().delete()
-    Chat.objects.all().delete()
-    OldPerson.objects.all().delete()
-    Helper.objects.all().delete()
-    User.objects.filter().delete()
+        populate_transactions()
+        transactions = Transaction.objects.all()
+        url = reverse('analytics:transactions')
+        response = self.client.get(url)
+        #get all transactions
+        for t in transactions:
+            self.assertContains(response, t.details)
 
 def populate_users():
     dateOfBirth = datetime.datetime(1996, 1, 27)
-
     users = [
         {
             "name": "Ana Paola Chazaro Watty",
@@ -50,22 +49,6 @@ def populate_users():
             "isHelper": True
         },
         {
-            "name": "Charlotte Chen",
-            "email": "charlotte@gmail.com",
-            "password": "123123",
-            "phoneNumber": "07510302811",
-            "dateOfBirth": dateOfBirth,
-            "isHelper": False
-        },
-        {
-            "name": "Joseph Chen",
-            "email": "joseph@gmail.com",
-            "password": "123123",
-            "phoneNumber": "07510302811",
-            "dateOfBirth": dateOfBirth,
-            "isHelper": False
-        },
-        {
             "name": "Samuel Jakobson",
             "email": "samuel@gmail.com",
             "password": "123123",
@@ -73,67 +56,11 @@ def populate_users():
             "dateOfBirth": dateOfBirth,
             "isHelper": False
         },
-        {
-            "name": "Daniel Chazaro Watty",
-            "email": "daniel@gmail.com",
-            "password": "123123",
-            "phoneNumber": "07510302811",
-            "dateOfBirth": dateOfBirth,
-            "isHelper": True
-        },
-        {
-            "name": "Paul Jones",
-            "email": "paul@gmail.com",
-            "password": "123123",
-            "phoneNumber": "07510302811",
-            "dateOfBirth": dateOfBirth,
-            "isHelper": False
-        },
-        {
-            "name": "Jessica Lin",
-            "email": "jessica@gmail.com",
-            "password": "123123",
-            "phoneNumber": "07510302811",
-            "dateOfBirth": dateOfBirth,
-            "isHelper": True
-        },
-        {
-            "name": "Manika Gupta",
-            "email": "manika@gmail.com",
-            "password": "123123",
-            "phoneNumber": "07510302811",
-            "dateOfBirth": dateOfBirth,
-            "isHelper": True
-        },
-        {
-            "name": "Hannah Huges",
-            "email": "hannah@gmail.com",
-            "password": "123123",
-            "phoneNumber": "07510302811",
-            "dateOfBirth": dateOfBirth,
-            "isHelper": True
-        },
-        {
-            "name": "Michael Smith",
-            "email": "helper@gmail.com",
-            "password": "123123",
-            "phoneNumber": "07510302811",
-            "dateOfBirth": dateOfBirth,
-            "isHelper": True
-        },
-        {
-            "name": "Linda Thomas",
-            "email": "oldPerson@gmail.com",
-            "password": "123123",
-            "phoneNumber": "07510302811",
-            "dateOfBirth": dateOfBirth,
-            "isHelper": False
-        }
     ]
-    for u in users:
-        user = User.objects.get_or_create(name=u['name'], email = u['email'], phoneNumber = u['phoneNumber'], dateOfBirth=u['dateOfBirth'], isHelper=u['isHelper'])[0]
-        user.set_password(u['password'])
-        user.save()
+    for user in users:
+        u = User.objects.get_or_create(name=user['name'], email = user['email'], phoneNumber = user['phoneNumber'], dateOfBirth=user['dateOfBirth'], isHelper=user['isHelper'])[0]
+        u.set_password(user['password'])
+        u.save()
 
 def populate_old_persons():
     old_users = User.objects.filter(isHelper = False)
@@ -146,13 +73,6 @@ def populate_helpers():
 
     for u in helper_users:
         Helper.objects.get_or_create(isVerified = True, user = u)
-
-def populate_manager():
-    dateOfBirth = datetime.datetime(1996, 1, 27)
-    user = User.objects.get_or_create(name="admin", email = "admin@gmail.com", phoneNumber = "7510299381", 
-            dateOfBirth=dateOfBirth, is_staff=True, is_superuser = True)[0]
-    user.set_password("123123")
-    user.save()
 
 def populate_helps():
     d1 = datetime.datetime(2022, 8, 8)
@@ -278,34 +198,6 @@ def populate_help_candidates():
         else:
             HelpCandidates.objects.get_or_create(help = h, helper=random.choice(helpers), status='3', description=random.choice(descriptions))
 
-def populate_chats():
-    helps = Help.objects.filter(helper__isnull = False)
-    for h in helps:
-        chat = Chat.objects.create(isActive = True)
-        chat.users.set([h.oldPerson.user, h.helper.user])
-
-def populate_messages():
-    chats = Chat.objects.all()
-    for c in chats:
-        helper = c.users.filter(isHelper = True)[0]
-        oldPerson = c.users.filter(isHelper = False)[0]
-        messages = [
-            {
-                "type": "txt",
-                "content": "Hello, nice to meet you!",
-                "sender": helper,
-                "chat": c,
-            },
-            {
-                "type": "txt",
-                "content": "Hi " +(helper.name).split(" ", 1)[0]+", how are you?",
-                "sender": oldPerson,
-                "chat": c,
-            }
-        ]
-        for m in messages:
-            Message.objects.get_or_create(type = m['type'], content=m['content'], sender=m['sender'], chat=m['chat'])
-
 def populate_transactions():
     helps = Help.objects.all()
     transactions = []
@@ -318,7 +210,6 @@ def populate_transactions():
         })
     for t in transactions:
         Transaction.objects.get_or_create(emailUser1= t['emailUser1'], model=t['model'], action=t['action'], details=t['details'])
-
 
     transactions = []
     candidates = HelpCandidates.objects.all()
@@ -346,7 +237,3 @@ def random_date(start_date, end_date):
     days_between_dates = time_between_dates.days
     random_number_of_days = random.randrange(days_between_dates)
     return start_date + datetime.timedelta(days=random_number_of_days)
-
-
-if __name__ == "__main__":
-    populate()

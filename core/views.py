@@ -104,8 +104,6 @@ def allHelpRequests(request):
         h.oldPersonName = user.name
 
     isVerified = helper.isVerified
-    print("Is verified")
-    print(isVerified)
     return render(request, 'core/helpRequestList.html', {'help_requests': help_requests, 'isVerified': isVerified})
 
 @login_required
@@ -237,11 +235,9 @@ def get_or_create_chat(user1, user2):
     return chat[0]
 
 def create_chat(current_user, contact):
-    print("Creating chat")
     slug = current_user.name.split('@')[0] + contact.name.split('@')[0]
     chat = Chat()
     chat.slug = slug
-    print("slug " +slug)
     chat.save()
     chat.users.set([current_user, contact])
     chat.save()

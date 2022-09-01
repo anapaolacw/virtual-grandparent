@@ -28,8 +28,11 @@
     color: #999;
 }
 .fixed-height-container{
-    height: 420px;
     padding: 3px;
+}
+.chat_container{
+    display: flex;
+    margin-bottom: -16px;
 }
 .scroll-content{
     height:340px;

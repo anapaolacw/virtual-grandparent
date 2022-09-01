@@ -1,2 +1,3 @@
 from .model_test import *
-from .pages_test import *
+from .acceptance_test import *
+from .urls_test import *

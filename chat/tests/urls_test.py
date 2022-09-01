@@ -7,7 +7,7 @@ from core.models import Help, Helper, OldPerson
 from chat.models import Chat
 
 # Create your tests here.
-class URLTests(TestCase):
+class CoreUrlsTests(TestCase):
     # Tests all urls
     def setUp(self):
         populate_users()

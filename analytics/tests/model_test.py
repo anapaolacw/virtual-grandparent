@@ -3,9 +3,8 @@ from django.test import TestCase
 from analytics.models import Transaction
 from authentication.models import User
 from core.models import Help, OldPerson
-
 class AnalyticsModelTest(TestCase):
-    def test_add_user(self):
+    def test_add_analytics(self):
         transaction_counter = Transaction.objects.all().count()
         old_person = add_old_person(add_user())
         help = add_help(old_person)
@@ -15,7 +14,7 @@ class AnalyticsModelTest(TestCase):
             action = "Created",
             details = "User "+str(old_person.user.name)+ "created a help request with id  "+str(help.id)+ "with the following description: "+help.description
         )
-        transaction_counter_after_add = User.objects.all().count()
+        transaction_counter_after_add = Transaction.objects.all().count()
         self.assertGreater(transaction_counter_after_add, transaction_counter)
 
 def add_user():

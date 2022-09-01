@@ -2,11 +2,10 @@ import datetime
 from django.test import Client, TestCase
 from authentication.models import User
 from core.models import Help, HelpCandidates, Helper, OldPerson
-from chat.models import Chat
 from django.urls import reverse
 
 # Create your tests here.
-class URLTests(TestCase):
+class CoreUrlsTests(TestCase):
     # Tests all urls
     def setUp(self):
         populate_users()
@@ -66,8 +65,7 @@ class URLTests(TestCase):
     def test_help_request_candidates_page(self):
         help = Help.objects.first()
         url = reverse('core:getCandidates', args=(help.id,))
-        response = self.client.get(url)
-        url = reverse('core:getCandidates', args=(help.id,))        
+        response = self.client.get(url)      
         self.assertEqual(response.status_code, 200)
 
     def test_reject_candidate_page(self):
