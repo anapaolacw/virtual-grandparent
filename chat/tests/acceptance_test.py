@@ -15,7 +15,7 @@ class ChatAcceptanceTest(TestCase):
         populate_helpers()
         populate_help()
 
-    # As a User, I want to be able to send messages to my contacts
+    #As a User, I want to be able to send messages to my contacts
     def test_use_case_send_message(self):
         help = Help.objects.first()
         chat = Chat.objects.create(isActive = True)
@@ -35,7 +35,7 @@ class ChatAcceptanceTest(TestCase):
         response = self.client.get(url)
         self.assertContains(response, message.content)
 
-    # As a User, I want to be able to see my contacts
+    #As a User, I want to be able to see my contacts
     def test_use_case_see_contacts(self):
         helper = Helper.objects.get(user_id = self.user.id)
         persons = OldPerson.objects.filter(id__in=Help.objects.filter(helper = helper).values("oldPerson"))
@@ -46,15 +46,13 @@ class ChatAcceptanceTest(TestCase):
         for c in contacts:
             self.assertContains(response, c.name)
 
-    # As a User, I want to be able to see my chats
+    #As a User, I want to be able to see my chats
     def test_use_case_see_chat(self):
         help = Help.objects.first()
         chat = Chat.objects.create(isActive = True)
         chat.users.set([help.oldPerson.user, help.helper.user])
         #Show message in the page
         url = reverse('chat:chat', args=(chat.id,))
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
     
 def populate_users():
     dateOfBirth = datetime.datetime(1996, 1, 27)

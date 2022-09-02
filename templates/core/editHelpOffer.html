@@ -31,14 +31,12 @@
             
             {% if help_request %}
                 <fieldset class="mb-5">
-                    <label class="text-gray" >Help category:</label>
-                    <select disabled="true" class="w-full mt-2 px-4 py-2 rounded-xl background-white disabled">
-                        <option value="{{help_request.category}}">{{help_request.get_category_display}}</option>
-                    </select>
+                    <label style="font-weight: 500;" >Help category:</label>
+                    <p class="disabled">{{help_request.get_category_display}}</p>
                 </fieldset>
                 <fieldset class="mb-5">
-                    <label class="text-gray">Description:</label>
-                    <textarea readonly class="w-full mt-2 px-4 py-2 rounded-xl background-white disabled">{{help_request.description}}</textarea>
+                    <label style="font-weight: 500;">Description:</label>
+                    <p class="disabled">{{help_request.description}}</p>
                 </fieldset>
             {% endif %}
 
@@ -47,7 +45,7 @@
 
                 {% for field in form %}
                 <fieldset class="mb-5">
-                    <label class="text-gray"  for="{{ field.name }}">{{ field.field.widget.attrs.placeholder }}:</label>
+                    <label style="font-weight: 500;"  for="{{ field.name }}">{{ field.field.widget.attrs.placeholder }}:</label>
                     {{field}}
                     {% if field.errors %}
                         <div class="mt-1 px-4 py-2 rounded-xl bg-red-300 text-white">
